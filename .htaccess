@@ -6,6 +6,11 @@ DirectoryIndex index.php
 ErrorDocument 404 /404.php
 ServerSignature Off
 
+# Pass login headers to PHP (staging gate) on servers that drop them
+<IfModule mod_setenvif.c>
+  SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+</IfModule>
+
 # ---------------------------------------------------------------
 # 1. HTTPS + canonical host (one 301 hop from any variant)
 #    http://www.x  -> https://x

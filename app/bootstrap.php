@@ -65,24 +65,57 @@ if (is_staging()) {
 // Done in PHP (not hPanel directory protection) so git deploys
 // can never overwrite or drop it.
 // ---------------------------------------------------------------
-if (is_staging() && PHP_SAPI !== 'cli' && !defined('OLIVE_SKIP_GATE')) {
-    $hash = (string) cfg('staging_pass_hash', '');
-    $user = $_SERVER['PHP_AUTH_USER'] ?? '';
-    $pass = $_SERVER['PHP_AUTH_PW'] ?? '';
-
-    // Some LiteSpeed setups pass credentials only via HTTP_AUTHORIZATION
-    if ($user === '' && !empty($_SERVER['HTTP_AUTHORIZATION']) && str_starts_with($_SERVER['HTTP_AUTHORIZATION'], 'Basic ')) {
-        [$user, $pass] = array_pad(explode(':', (string) base64_decode(substr($_SERVER['HTTP_AUTHORIZATION'], 6)), 2), 2, '');
+/**
+ * Read Basic-auth username/password from wherever this server puts them.
+ * LiteSpeed/Apache/CGI setups differ, so check every known location.
+ */
+function olive_basic_auth(): array
+{
+    if (isset($_SERVER['PHP_AUTH_USER']) && $_SERVER['PHP_AUTH_USER'] !== '') {
+        return [trim((string) $_SERVER['PHP_AUTH_USER']), (string) ($_SERVER['PHP_AUTH_PW'] ?? '')];
     }
+    $header = $_SERVER['HTTP_AUTHORIZATION']
+        ?? $_SERVER['REDIRECT_HTTP_AUTHORIZATION']
+        ?? $_SERVER['REDIRECT_REDIRECT_HTTP_AUTHORIZATION']
+        ?? '';
+    if ($header === '' && function_exists('getallheaders')) {
+        foreach ((array) getallheaders() as $k => $v) {
+            if (strcasecmp((string) $k, 'Authorization') === 0) {
+                $header = (string) $v;
+                break;
+            }
+        }
+    }
+    if (stripos($header, 'Basic ') !== 0) {
+        return ['', ''];
+    }
+    $decoded = (string) base64_decode(trim(substr($header, 6)), true);
+    [$u, $p] = array_pad(explode(':', $decoded, 2), 2, '');
+    return [trim($u), $p];
+}
+
+if (is_staging() && PHP_SAPI !== 'cli' && !defined('OLIVE_SKIP_GATE')) {
+    $hash = trim((string) cfg('staging_pass_hash', ''));
+    [$user, $pass] = olive_basic_auth();
 
     $ok = $hash !== ''
-        && hash_equals((string) cfg('staging_user', ''), $user)
+        && hash_equals(trim((string) cfg('staging_user', '')), $user)
         && password_verify($pass, $hash);
 
     if (!$ok) {
         header('WWW-Authenticate: Basic realm="Olive staging", charset="UTF-8"');
+        header('Cache-Control: no-store');
         http_response_code(401);
-        echo $hash === '' ? 'Staging is locked: set staging_pass_hash in config.php.' : 'Login required.';
+        header('Content-Type: text/plain; charset=utf-8');
+        if ($hash === '') {
+            echo "Staging is locked (code A): config.php is missing, or staging_pass_hash is empty.";
+        } elseif ($user === '' && $pass === '') {
+            echo "Login required (code B). If you already typed the password, the server did not pass it to PHP.";
+        } elseif (!hash_equals(trim((string) cfg('staging_user', '')), $user)) {
+            echo "Login failed (code C): wrong username.";
+        } else {
+            echo "Login failed (code D): wrong password, or the hash in config.php was changed while pasting.";
+        }
         exit;
     }
 }
