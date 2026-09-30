@@ -25,12 +25,15 @@ window.dataLayer.push(<?= json_encode([
     'lead_id' => $lead['lead_id'],
     'event_type' => $lead['event_type'],
     'guests_band' => $lead['guests_band'],
+    'form_source' => $lead['form_source'] ?? 'main',
     'lead_source' => $lead['lt_source'],
     'lead_medium' => $lead['lt_medium'],
     'lead_campaign' => $lead['lt_campaign'],
 ], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) ?>);
 </script>
 <?php endif; ?>
+<script>/* Enquiry sent: never show the quick-enquiry pop-up to this browser again */
+try{document.cookie='olv_lead=1; max-age=15552000; path=/; SameSite=Lax; Secure';}catch(e){}</script>
 <title>Thank you | Olive Catering Company</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">

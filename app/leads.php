@@ -36,7 +36,7 @@ const OLIVE_LEAD_COLUMNS = [
     'lead_id', 'submitted_at_ist', 'name', 'phone', 'event_date', 'event_type', 'guests', 'guests_band', 'message',
     'ft_source', 'ft_medium', 'ft_campaign',
     'lt_source', 'lt_medium', 'lt_campaign', 'lt_term', 'lt_content',
-    'gclid', 'fbclid', 'referrer', 'landing_page', 'page_url', 'device', 'ga_client_id', 'status',
+    'gclid', 'fbclid', 'referrer', 'landing_page', 'page_url', 'form_source', 'device', 'ga_client_id', 'status',
 ];
 
 function new_lead_id(): string

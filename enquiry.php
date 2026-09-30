@@ -103,6 +103,7 @@ $lead = [
     'guests_band' => guests_band($guests),
     'message' => $message,
     'device' => device_type((string) ($_SERVER['HTTP_USER_AGENT'] ?? '')),
+    'form_source' => in_array($_POST['form_source'] ?? '', ['main', 'popup'], true) ? $_POST['form_source'] : 'main',
     'status' => 'New',
 ];
 foreach (OLIVE_ATTRIBUTION_FIELDS as $f) {
@@ -126,6 +127,7 @@ $_SESSION['olive_lead'] = [
     'lead_id' => $lead['lead_id'],
     'event_type' => $lead['event_type'],
     'guests_band' => $lead['guests_band'],
+    'form_source' => $lead['form_source'],
     'lt_source' => $lead['lt_source'],
     'lt_medium' => $lead['lt_medium'],
     'lt_campaign' => $lead['lt_campaign'],

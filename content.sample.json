@@ -136,13 +136,44 @@
   ],
   "hygiene": {
     "heading": "Clean kitchen. Checked food. Every time.",
-    "points": [
-      "HACCP-compliant central kitchen",
-      "FSSAI licensed and compliant practices",
-      "Certified food-grade materials",
-      "Daily kitchen sanitation routine",
-      "Quality checks by experienced chefs",
-      "Fire safety compliant"
+    "intro": "How every Olive meal reaches your guests.",
+    "steps": [
+      {
+        "title": "Cooked in our central kitchen",
+        "text": "Our HACCP-compliant central kitchen is sanitised every day before cooking starts.",
+        "image": {
+          "src": "",
+          "alt": "Olive central kitchen",
+          "placeholder": "Central kitchen"
+        }
+      },
+      {
+        "title": "Checked by experienced chefs",
+        "text": "Ingredients and dishes go through quality checks by our chefs, and we use only certified food-grade materials.",
+        "image": {
+          "src": "",
+          "alt": "Chef checking food quality",
+          "placeholder": "Chef quality check"
+        }
+      },
+      {
+        "title": "Licensed and safety compliant",
+        "text": "We are FSSAI licensed and follow fire safety norms in the kitchen and at the venue.",
+        "image": {
+          "src": "",
+          "alt": "Olive kitchen safety setup",
+          "placeholder": "Kitchen safety / FSSAI"
+        }
+      },
+      {
+        "title": "Served by trained staff",
+        "text": "Trained hospitality staff and supervisors serve every counter and look after your guests.",
+        "image": {
+          "src": "",
+          "alt": "Olive staff serving guests at an event",
+          "placeholder": "Staff serving at event"
+        }
+      }
     ]
   },
   "gallery": [
@@ -250,5 +281,11 @@
   "footer": {
     "text": "Pure veg and Jain catering for weddings, corporate events and celebrations across Kutch.",
     "credit": false
+  },
+  "popup": {
+    "on": true,
+    "delay_seconds": 20,
+    "heading": "Planning an event?",
+    "text": "Leave your number and we will call you back with menu ideas and a quote."
   }
 }

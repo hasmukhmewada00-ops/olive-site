@@ -106,6 +106,7 @@ $announce = content('announcement', []);
       </div>
       <figure class="hero__media">
         <?= picture($hero['image'] ?? [], 'cloche cloche--hero', '(min-width: 900px) 42vw, 90vw', true, 1200, 1500) ?>
+        <?php $steam_class = 'steam--hero'; require OLIVE_ROOT . '/partials/steam.php'; ?>
         <figcaption class="hero__seal" aria-hidden="true"><span>100%</span>Pure veg</figcaption>
       </figure>
     </div>
@@ -156,9 +157,10 @@ $announce = content('announcement', []);
   <section class="menu" id="menu">
     <div class="wrap">
       <div class="menucard">
+        <?php $steam_class = 'steam--menu'; require OLIVE_ROOT . '/partials/steam.php'; ?>
         <p class="menucard__top">Olive Catering Company</p>
         <h2 class="menucard__title">Our menus &amp; specialties</h2>
-        <span class="menucard__rule" aria-hidden="true"></span>
+        <span class="abhla-rule" aria-hidden="true"><i class="abhla"></i></span>
         <ul class="menucard__list">
           <?php foreach (content('specialties', []) as $sp): ?>
             <li>
@@ -178,21 +180,37 @@ $announce = content('announcement', []);
     </div>
   </section>
 
-  <!-- Hygiene -->
-  <section class="section hygiene">
-    <div class="wrap hygiene__grid">
-      <div>
+  <!-- Hygiene story -->
+  <section class="section story" id="hygiene">
+    <div class="wrap">
+      <header class="section__head story__head">
         <p class="eyebrow">Hygiene &amp; quality</p>
         <h2 class="h2"><?= e(content('hygiene.heading', '')) ?></h2>
+        <p class="lead"><?= e(content('hygiene.intro', '')) ?></p>
         <?php if (!empty($b['fssai'])): ?>
-          <p class="fssai">FSSAI Lic. No. <strong><?= e($b['fssai']) ?></strong></p>
+          <p class="fssai"><i class="abhla abhla--sm" aria-hidden="true"></i>FSSAI Lic. No. <strong><?= e($b['fssai']) ?></strong></p>
         <?php endif; ?>
+      </header>
+      <?php $steps = content('hygiene.steps', []); ?>
+      <div class="story__grid">
+        <div class="story__stage" aria-hidden="true">
+          <?php foreach ($steps as $i => $st): ?>
+            <div class="story__frame<?= $i === 0 ? ' is-active' : '' ?>" data-frame="<?= $i ?>">
+              <?= picture($st['image'] ?? [], 'cloche story__img', '(min-width: 900px) 38vw, 0px', false, 900, 1100) ?>
+            </div>
+          <?php endforeach; ?>
+        </div>
+        <ol class="story__steps">
+          <?php foreach ($steps as $i => $st): ?>
+            <li class="story__step<?= $i === 0 ? ' is-active' : '' ?>" data-step="<?= $i ?>">
+              <div class="story__inline"><?= picture($st['image'] ?? [], 'story__img story__img--inline', '90vw', false, 900, 700) ?></div>
+              <span class="story__count"><?= $i + 1 ?> / <?= count($steps) ?></span>
+              <h3 class="story__title"><?= e($st['title'] ?? '') ?></h3>
+              <p><?= e($st['text'] ?? '') ?></p>
+            </li>
+          <?php endforeach; ?>
+        </ol>
       </div>
-      <ul class="checks">
-        <?php foreach (content('hygiene.points', []) as $pt): ?>
-          <li><?= e($pt) ?></li>
-        <?php endforeach; ?>
-      </ul>
     </div>
   </section>
 
@@ -287,6 +305,7 @@ $announce = content('announcement', []);
 
         <form class="form" id="enquiry-form" action="/enquiry.php" method="post" novalidate data-olive-form>
           <input type="hidden" name="form_token" value="<?= e(form_token()) ?>">
+          <input type="hidden" name="form_source" value="main">
           <div class="hp" aria-hidden="true">
             <label>Leave this empty <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
           </div>
@@ -357,6 +376,7 @@ $announce = content('announcement', []);
 </main>
 
 <footer class="foot">
+  <div class="toran" aria-hidden="true"><?php for ($i = 0; $i < 24; $i++): ?><i class="abhla abhla--sm"></i><?php endfor; ?></div>
   <div class="wrap foot__grid">
     <div>
       <p class="foot__logo"><?= logo_svg('olive-logo') ?></p>
@@ -377,9 +397,48 @@ $announce = content('announcement', []);
   </div>
 </footer>
 
-<a class="wa-float" href="<?= e(wa_href($waMsg)) ?>"<?= str_starts_with(wa_href($waMsg), 'http') ? ' target="_blank" rel="noopener"' : '' ?> data-track-location="float" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
-</a>
+<?php $waH = wa_href($waMsg); $waExt = str_starts_with($waH, 'http') ? ' target="_blank" rel="noopener"' : ''; ?>
+<div class="float" data-track-location="float">
+  <a class="float__btn float__btn--call" href="<?= e(tel_href()) ?>" aria-label="Call Olive Catering Company">
+    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1Z"/></svg>
+  </a>
+  <a class="float__btn float__btn--wa" href="<?= e($waH) ?>"<?= $waExt ?> aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
+  </a>
+</div>
+
+<nav class="actionbar" aria-label="Contact Olive" data-track-location="sticky_bar">
+  <a class="actionbar__btn actionbar__btn--call" href="<?= e(tel_href()) ?>">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1Z"/></svg>
+    Call now
+  </a>
+  <a class="actionbar__btn actionbar__btn--wa" href="<?= e($waH) ?>"<?= $waExt ?>>
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
+    WhatsApp
+  </a>
+</nav>
+
+<?php $pop = content('popup', []); if (!empty($pop['on'])): ?>
+<dialog class="qe" id="quick-enquiry" aria-labelledby="qe-title" data-delay="<?= (int) ($pop['delay_seconds'] ?? 20) ?>">
+  <button class="qe__close" type="button" aria-label="Close">&times;</button>
+  <?php $steam_class = 'steam--qe'; require OLIVE_ROOT . '/partials/steam.php'; ?>
+  <p class="eyebrow">Get a quote</p>
+  <h2 class="qe__title" id="qe-title"><?= e($pop['heading'] ?? '') ?></h2>
+  <p class="muted"><?= e($pop['text'] ?? '') ?></p>
+  <form class="form qe__form" action="/enquiry.php" method="post" id="qe-form" data-olive-form>
+    <input type="hidden" name="form_token" value="<?= e(form_token()) ?>">
+    <input type="hidden" name="form_source" value="popup">
+    <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
+    <div class="field"><label for="qe-name">Your name</label><input id="qe-name" name="name" type="text" autocomplete="name" required maxlength="80"></div>
+    <div class="field"><label for="qe-phone">Mobile number</label><input id="qe-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="10-digit mobile"></div>
+    <div class="field"><label for="qe-type">Type of event</label>
+      <select id="qe-type" name="event_type" required><option value="">Choose one</option><?php foreach (OLIVE_EVENT_TYPES as $t): ?><option><?= e($t) ?></option><?php endforeach; ?></select>
+    </div>
+    <button class="btn btn--cta btn--block" type="submit">Call me back</button>
+    <p class="form-note">We only use your number to reply to this enquiry. <a href="/privacy.php">Privacy</a></p>
+  </form>
+</dialog>
+<?php endif; ?>
 
 <dialog class="lightbox" id="lightbox" aria-label="Photo">
   <button class="lightbox__close" type="button" aria-label="Close photo">&times;</button>

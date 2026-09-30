@@ -284,6 +284,21 @@
                     "value": "{{JS - traffic_type}}"
                   }
                 ]
+              },
+              {
+                "type": "MAP",
+                "map": [
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameter",
+                    "value": "form_source"
+                  },
+                  {
+                    "type": "TEMPLATE",
+                    "key": "parameterValue",
+                    "value": "{{DLV - form_source}}"
+                  }
+                ]
               }
             ]
           }
@@ -319,7 +334,7 @@
               {
                 "type": "TEMPLATE",
                 "key": "arg1",
-                "value": "^(generate_lead|whatsapp_click|call_click|email_click|map_click|form_start|menu_view)$"
+                "value": "^(generate_lead|whatsapp_click|call_click|email_click|map_click|form_start|menu_view|popup_view|popup_close)$"
               }
             ]
           }
@@ -628,6 +643,31 @@
             "type": "TEMPLATE",
             "key": "value",
             "value": "G-FG2XD237R9"
+          }
+        ],
+        "formatValue": {}
+      },
+      {
+        "accountId": "0",
+        "containerId": "0",
+        "variableId": "24",
+        "name": "DLV - form_source",
+        "type": "v",
+        "parameter": [
+          {
+            "type": "INTEGER",
+            "key": "dataLayerVersion",
+            "value": "2"
+          },
+          {
+            "type": "BOOLEAN",
+            "key": "setDefaultValue",
+            "value": "false"
+          },
+          {
+            "type": "TEMPLATE",
+            "key": "name",
+            "value": "form_source"
           }
         ],
         "formatValue": {}
