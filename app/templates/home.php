@@ -35,6 +35,7 @@ $announce = content('announcement', []);
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<?php require OLIVE_ROOT . '/partials/loader-head.php'; ?>
 <?php require OLIVE_ROOT . '/partials/gtm-head.php'; ?>
 <title><?= e($title) ?></title>
 <meta name="description" content="<?= e($desc) ?>">
@@ -58,6 +59,7 @@ $announce = content('announcement', []);
 </head>
 <body>
 <?php require OLIVE_ROOT . '/partials/gtm-body.php'; ?>
+<?php require OLIVE_ROOT . '/partials/loader.php'; ?>
 <a class="skip" href="#main">Skip to content</a>
 
 <?php if (is_staging()): ?>

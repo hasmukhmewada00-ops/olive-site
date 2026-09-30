@@ -53,3 +53,12 @@
     if (f) f.scrollIntoView();
   }
 })();
+
+/* Remove the loader from the page once it has faded out */
+(function () {
+  var l = document.getElementById('loader');
+  if (!l) return;
+  l.addEventListener('animationend', function (e) {
+    if (e.animationName === 'olvOut') { l.remove(); document.documentElement.classList.remove('show-loader'); }
+  });
+})();
