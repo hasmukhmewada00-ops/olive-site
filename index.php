@@ -38,10 +38,7 @@ $name = (string) ($b['name'] ?? 'Olive Catering Company');
 <?php require __DIR__ . '/partials/gtm-body.php'; ?>
 <main class="hold">
   <div class="hold__inner">
-    <p class="hold__mark" aria-label="<?= e($name) ?>">
-      <span class="hold__word">Olive</span>
-      <span class="hold__tag">Catering Company</span>
-    </p>
+    <p class="hold__mark"><?= logo_svg('olive-logo') ?></p>
 
     <span class="hold__rule" aria-hidden="true"></span>
 

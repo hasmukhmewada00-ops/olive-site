@@ -41,7 +41,8 @@ body {
   text-align: center;
 }
 
-.hold__mark { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+.hold__mark { margin: 0 auto; width: min(300px, 78vw); color: var(--cream); }
+.hold__mark svg { display: block; width: 100%; height: auto; }
 
 .hold__word {
   font-family: var(--serif);

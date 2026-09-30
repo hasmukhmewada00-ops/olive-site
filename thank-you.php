@@ -42,7 +42,7 @@ window.dataLayer.push(<?= json_encode([
 <?php require __DIR__ . '/partials/gtm-body.php'; ?>
 <main class="hold">
   <div class="hold__inner">
-    <p class="hold__mark"><span class="hold__word">Olive</span><span class="hold__tag">Catering Company</span></p>
+    <p class="hold__mark"><?= logo_svg('olive-logo') ?></p>
     <span class="hold__rule" aria-hidden="true"></span>
     <h1 class="hold__headline">Thank you, we've received your enquiry.</h1>
     <p class="hold__sub">Our team will call you shortly. For a faster reply, send us a message on WhatsApp.</p>

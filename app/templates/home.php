@@ -71,8 +71,7 @@ $announce = content('announcement', []);
 <header class="top" id="top">
   <div class="wrap top__row">
     <a class="brand" href="#top" aria-label="<?= e($name) ?> home">
-      <span class="brand__word">Olive</span>
-      <span class="brand__tag">Catering Company</span>
+      <?= logo_svg('olive-wordmark', 'brand__logo') ?>
     </a>
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#about">About</a>
@@ -358,7 +357,7 @@ $announce = content('announcement', []);
 <footer class="foot">
   <div class="wrap foot__grid">
     <div>
-      <p class="brand brand--light"><span class="brand__word">Olive</span><span class="brand__tag">Catering Company</span></p>
+      <p class="foot__logo"><?= logo_svg('olive-logo') ?></p>
       <p class="foot__text"><?= e(content('footer.text', '')) ?></p>
     </div>
     <nav aria-label="Footer">

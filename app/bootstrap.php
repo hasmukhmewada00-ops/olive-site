@@ -171,6 +171,17 @@ function phone_digits(string $phone): string
     return $d;
 }
 
+/** Inline an SVG logo from assets/img/logo (trusted files in the repo). */
+function logo_svg(string $name, string $class = ''): string
+{
+    $file = OLIVE_ROOT . '/assets/img/logo/' . basename($name) . '.svg';
+    if (!is_file($file)) {
+        return '';
+    }
+    $svg = trim((string) file_get_contents($file));
+    return $class !== '' ? preg_replace('/^<svg /', '<svg class="' . e($class) . '" ', $svg, 1) : $svg;
+}
+
 function whatsapp_link(string $phone, string $message): string
 {
     return 'https://wa.me/' . phone_digits($phone) . '?text=' . rawurlencode($message);
