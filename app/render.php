@@ -79,7 +79,6 @@ function schema_json(): string
         '@type' => 'FoodEstablishment',
         '@id' => canonical_url('/#business'),
         'name' => $b['name'] ?? 'Olive Catering Company',
-        'alternateName' => 'Olive, The Catering Company',
         'description' => content('footer.text', ''),
         'url' => canonical_url('/'),
         'image' => canonical_url('/assets/img/og-image.jpg'),

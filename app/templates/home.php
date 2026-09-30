@@ -72,7 +72,7 @@ $announce = content('announcement', []);
   <div class="wrap top__row">
     <a class="brand" href="#top" aria-label="<?= e($name) ?> home">
       <span class="brand__word">Olive</span>
-      <span class="brand__tag">The Catering Company</span>
+      <span class="brand__tag">Catering Company</span>
     </a>
     <nav class="nav" id="nav" aria-label="Main">
       <a href="#about">About</a>
@@ -155,7 +155,7 @@ $announce = content('announcement', []);
   <section class="menu" id="menu">
     <div class="wrap">
       <div class="menucard">
-        <p class="menucard__top">Olive &middot; The Catering Company</p>
+        <p class="menucard__top">Olive Catering Company</p>
         <h2 class="menucard__title">Our menus &amp; specialties</h2>
         <span class="menucard__rule" aria-hidden="true"></span>
         <ul class="menucard__list">
@@ -358,7 +358,7 @@ $announce = content('announcement', []);
 <footer class="foot">
   <div class="wrap foot__grid">
     <div>
-      <p class="brand brand--light"><span class="brand__word">Olive</span><span class="brand__tag">The Catering Company</span></p>
+      <p class="brand brand--light"><span class="brand__word">Olive</span><span class="brand__tag">Catering Company</span></p>
       <p class="foot__text"><?= e(content('footer.text', '')) ?></p>
     </div>
     <nav aria-label="Footer">

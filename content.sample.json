@@ -2,7 +2,7 @@
   "_note": "Seed content from the client portfolio (Sep 2026). Copied to data/content.json on first install; after that the CMS edits data/content.json only. Items with \"confirmed\": false show on staging only (with a 'to confirm' tag) and are hidden on the live site until the client confirms them.",
   "business": {
     "name": "Olive Catering Company",
-    "tagline": "The Catering Company",
+    "tagline": "Catering Company",
     "established": 2023,
     "phone": "",
     "phone_note": "CONFIRM: portfolio says +91 88477 40147, onboarding said +91 96871 20784",

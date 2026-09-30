@@ -40,7 +40,7 @@ $name = (string) ($b['name'] ?? 'Olive Catering Company');
   <div class="hold__inner">
     <p class="hold__mark" aria-label="<?= e($name) ?>">
       <span class="hold__word">Olive</span>
-      <span class="hold__tag">The Catering Company</span>
+      <span class="hold__tag">Catering Company</span>
     </p>
 
     <span class="hold__rule" aria-hidden="true"></span>

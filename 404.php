@@ -17,7 +17,7 @@ $page_type = '404';
 <?php require __DIR__ . '/partials/gtm-body.php'; ?>
 <main class="hold">
   <div class="hold__inner">
-    <p class="hold__mark"><span class="hold__word">Olive</span><span class="hold__tag">The Catering Company</span></p>
+    <p class="hold__mark"><span class="hold__word">Olive</span><span class="hold__tag">Catering Company</span></p>
     <span class="hold__rule" aria-hidden="true"></span>
     <h1 class="hold__headline">This page isn't on the menu.</h1>
     <p class="hold__sub">The page you're looking for doesn't exist or has moved.</p>
