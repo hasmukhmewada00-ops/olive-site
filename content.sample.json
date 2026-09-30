@@ -45,9 +45,11 @@
     "headline": "Pure veg and Jain catering for weddings and events in Gandhidham",
     "subline": "Traditional flavours, served with modern presentation, for weddings, corporate events and family celebrations across Kutch.",
     "image": {
-      "src": "",
-      "alt": "Olive catering buffet set up for a wedding in Kutch",
-      "placeholder": "Hero: wide wedding buffet or live counter photo"
+      "src": "/assets/img/photos/pure-veg-wedding-buffet-brass-chafing-dishes-gandhidham-960.webp",
+      "alt": "Pure veg wedding buffet with brass chafing dishes and marigold garlands",
+      "width": 1600,
+      "height": 2000,
+      "ai_placeholder": true
     }
   },
   "trust": [
@@ -75,9 +77,11 @@
       "Since then we have catered more than 500 events across Gandhidham and nearby towns, including 30+ large weddings. Our chefs cook traditional recipes with modern presentation, and our trained hospitality staff and supervisors look after every counter and every guest."
     ],
     "image": {
-      "src": "",
-      "alt": "Olive chefs preparing food in the central kitchen",
-      "placeholder": "Team or kitchen photo"
+      "src": "/assets/img/photos/chef-plating-vegetarian-thali-olive-kitchen-960.webp",
+      "alt": "Chef plating a vegetarian thali with dal, sabzi and rotis",
+      "width": 1600,
+      "height": 2000,
+      "ai_placeholder": true
     }
   },
   "services": [
@@ -142,9 +146,11 @@
         "title": "Cooked in our central kitchen",
         "text": "Our HACCP-compliant central kitchen is sanitised every day before cooking starts.",
         "image": {
-          "src": "",
-          "alt": "Olive central kitchen",
-          "placeholder": "Central kitchen"
+          "src": "/assets/img/photos/clean-catering-kitchen-cooks-hairnets-gloves-960.webp",
+          "alt": "Clean catering kitchen with cooks in hairnets and gloves",
+          "width": 1600,
+          "height": 2000,
+          "ai_placeholder": true
         }
       },
       {
@@ -169,9 +175,11 @@
         "title": "Served by trained staff",
         "text": "Trained hospitality staff and supervisors serve every counter and look after your guests.",
         "image": {
-          "src": "",
-          "alt": "Olive staff serving guests at an event",
-          "placeholder": "Staff serving at event"
+          "src": "/assets/img/photos/olive-staff-serving-wedding-buffet-kutch-960.webp",
+          "alt": "Olive staff in gloves serving guests at a wedding buffet",
+          "width": 1600,
+          "height": 2000,
+          "ai_placeholder": true
         }
       }
     ]
@@ -208,9 +216,12 @@
       "placeholder": "Staff serving"
     },
     {
-      "src": "",
-      "alt": "Decorated food counter at a reception",
-      "placeholder": "Reception decor"
+      "src": "/assets/img/photos/wedding-reception-food-counter-marigold-decor-960.webp",
+      "alt": "Wedding reception food counter with brass lamps and marigold decor",
+      "placeholder": "Reception decor",
+      "width": 1600,
+      "height": 1200,
+      "ai_placeholder": true
     },
     {
       "src": "",
@@ -287,5 +298,6 @@
     "delay_seconds": 20,
     "heading": "Planning an event?",
     "text": "Leave your number and we will call you back with menu ideas and a quote."
-  }
+  },
+  "_images_note": "Images marked ai_placeholder are AI-generated mood images. Replace the kitchen, staff and gallery ones with the client's real photos before launch."
 }
