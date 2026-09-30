@@ -12,7 +12,8 @@ define('OLIVE_DATA', OLIVE_ROOT . '/data');
 // ---------------------------------------------------------------
 // Settings: config.php on the server, sample values as fallback
 // ---------------------------------------------------------------
-$__defaults = require OLIVE_ROOT . '/config.sample.php';
+$__defaults = is_file(OLIVE_ROOT . '/config.sample.php') ? require OLIVE_ROOT . '/config.sample.php' : [];
+$__defaults = is_array($__defaults) ? $__defaults : [];
 $__local = is_file(OLIVE_ROOT . '/config.php') ? require OLIVE_ROOT . '/config.php' : [];
 $GLOBALS['OLIVE_CONFIG'] = array_replace_recursive($__defaults, is_array($__local) ? $__local : []);
 
