@@ -1,0 +1,60 @@
+{
+  "_note": "Seed content from the client portfolio (Sep 2026). Copied to data/content.json on first install; after that the CMS edits data/content.json only. Fields marked CONFIRM must be checked with the client before launch.",
+
+  "business": {
+    "name": "Olive Catering Company",
+    "tagline": "The Catering Company",
+    "established": 2023,
+    "phone": "",
+    "phone_note": "CONFIRM: portfolio says +91 88477 40147, onboarding said +91 96871 20784",
+    "whatsapp": "",
+    "email": "olivecatering2025@gmail.com",
+    "instagram": "olive288711",
+    "address": {
+      "street": "Plot No. 79, Ward No DC-5, Ramchandani Road, Near New High Court",
+      "locality": "Adipur",
+      "region": "Gujarat",
+      "postal_code": "370205",
+      "country": "IN"
+    },
+    "hours": "",
+    "fssai": "10724013000075",
+    "gstin": "",
+    "gstin_note": "CONFIRM: printed as 24AAJFO9010HIZD, likely ...H1ZD",
+    "area_served": ["Gandhidham", "Adipur", "Anjar", "Bhuj", "Mundra", "Kandla"]
+  },
+
+  "holding": {
+    "headline": "Pure veg and Jain catering for weddings, corporate events and celebrations across Kutch.",
+    "subline": "Our new website is on its way. Until then, reach us directly.",
+    "whatsapp_message": "Hi Olive, I'd like to enquire about catering for my event. (via website)"
+  },
+
+  "trust": [
+    { "value": "2023", "label": "Serving Kutch since" },
+    { "value": "500+", "label": "Events catered" },
+    { "value": "25,000+", "label": "Guests served" },
+    { "value": "100%", "label": "Pure veg & Jain" }
+  ],
+
+  "services": [
+    "Wedding catering",
+    "Corporate lunch & events",
+    "Birthday parties & social gatherings",
+    "Festival & religious functions",
+    "School, college & industrial canteens",
+    "Live counters & themed menus"
+  ],
+
+  "compliance": [
+    "HACCP-compliant central kitchen",
+    "FSSAI licensed",
+    "Fire safety compliant",
+    "Certified food-grade materials",
+    "Daily kitchen sanitation"
+  ],
+
+  "associations": [
+    { "name": "Holiday Village Resort", "note": "Food & beverage partner. CONFIRM permission to name/logo." }
+  ]
+}

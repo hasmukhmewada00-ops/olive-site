@@ -1,0 +1,17 @@
+# Secrets and per-server settings (created by hand on each server)
+config.php
+.env
+
+# Client content and leads: live only on the server, never in git
+data/*
+!data/.htaccess
+uploads/*
+!uploads/.htaccess
+
+# System / editor
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+node_modules/

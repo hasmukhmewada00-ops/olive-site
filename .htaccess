@@ -1,0 +1,80 @@
+# Olive Catering Company - server rules
+# Same file runs on live (olivecateringcompany.in) and staging (staging.olivecateringcompany.in).
+
+Options -Indexes
+DirectoryIndex index.php
+ErrorDocument 404 /404.php
+ServerSignature Off
+
+# ---------------------------------------------------------------
+# 1. HTTPS + canonical host (one 301 hop from any variant)
+#    http://www.x  -> https://x
+#    https://www.x -> https://x
+#    http://x      -> https://x
+# ---------------------------------------------------------------
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Pass login headers through to PHP (needed for the staging gate on LiteSpeed)
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+  RewriteCond %{HTTPS} !=on
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+  # Dynamic robots.txt (staging blocks everything, live allows)
+  RewriteRule ^robots\.txt$ robots.php [L]
+
+  # Block private folders and files from the web
+  RewriteRule ^(app|data|docs|partials)(/|$) - [F,L]
+  RewriteRule (^|/)\. - [F,L]
+  RewriteRule ^(config\.php|config\.sample\.php|content\.sample\.json|README\.md)$ - [F,L]
+  RewriteRule \.(md|log|sh|bak|sql|dist|lock)$ - [F,L]
+</IfModule>
+
+# ---------------------------------------------------------------
+# 2. Security headers
+# ---------------------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=()"
+  Header always set Content-Security-Policy "upgrade-insecure-requests"
+
+  # HSTS: start short. After launch and a clean week, raise to
+  # max-age=31536000 (1 year). Do not add "preload" without a decision.
+  Header always set Strict-Transport-Security "max-age=300"
+
+  # Staging must never be indexed (also password-gated in PHP)
+  SetEnvIfNoCase Host ^staging\. IS_STAGING=1
+  Header always set X-Robots-Tag "noindex, nofollow" env=IS_STAGING
+
+  Header unset X-Powered-By
+</IfModule>
+
+# ---------------------------------------------------------------
+# 3. Caching: long cache for static files (CSS/JS use ?v= versioning)
+# ---------------------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 0 seconds"
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/avif "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/x-icon "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain application/javascript text/javascript application/json image/svg+xml application/xml
+</IfModule>
