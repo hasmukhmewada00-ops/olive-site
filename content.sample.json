@@ -1,6 +1,5 @@
 {
-  "_note": "Seed content from the client portfolio (Sep 2026). Copied to data/content.json on first install; after that the CMS edits data/content.json only. Fields marked CONFIRM must be checked with the client before launch.",
-
+  "_note": "Seed content from the client portfolio (Sep 2026). Copied to data/content.json on first install; after that the CMS edits data/content.json only. Items with \"confirmed\": false show on staging only (with a 'to confirm' tag) and are hidden on the live site until the client confirms them.",
   "business": {
     "name": "Olive Catering Company",
     "tagline": "The Catering Company",
@@ -13,48 +12,243 @@
     "address": {
       "street": "Plot No. 79, Ward No DC-5, Ramchandani Road, Near New High Court",
       "locality": "Adipur",
+      "district": "Kutch",
       "region": "Gujarat",
       "postal_code": "370205",
       "country": "IN"
     },
+    "map_query": "Ramchandani Road, Near New High Court, Adipur, Gujarat 370205",
     "hours": "",
     "fssai": "10724013000075",
     "gstin": "",
     "gstin_note": "CONFIRM: printed as 24AAJFO9010HIZD, likely ...H1ZD",
-    "area_served": ["Gandhidham", "Adipur", "Anjar", "Bhuj", "Mundra", "Kandla"]
+    "area_served": [
+      "Gandhidham",
+      "Adipur",
+      "Anjar",
+      "Bhuj",
+      "Mundra",
+      "Kandla"
+    ]
   },
-
+  "announcement": {
+    "on": false,
+    "text": ""
+  },
   "holding": {
     "headline": "Pure veg and Jain catering for weddings, corporate events and celebrations across Kutch.",
     "subline": "Our new website is on its way. Until then, reach us directly.",
     "whatsapp_message": "Hi Olive, I'd like to enquire about catering for my event. (via website)"
   },
-
+  "hero": {
+    "eyebrow": "Pure veg & Jain · Since 2023",
+    "headline": "Pure veg and Jain catering for weddings and events in Gandhidham",
+    "subline": "Traditional flavours, served with modern presentation, for weddings, corporate events and family celebrations across Kutch.",
+    "image": {
+      "src": "",
+      "alt": "Olive catering buffet set up for a wedding in Kutch",
+      "placeholder": "Hero: wide wedding buffet or live counter photo"
+    }
+  },
   "trust": [
-    { "value": "2023", "label": "Serving Kutch since" },
-    { "value": "500+", "label": "Events catered" },
-    { "value": "25,000+", "label": "Guests served" },
-    { "value": "100%", "label": "Pure veg & Jain" }
+    {
+      "value": "2023",
+      "label": "Serving Kutch since"
+    },
+    {
+      "value": "500+",
+      "label": "Events catered"
+    },
+    {
+      "value": "25,000+",
+      "label": "Guests served"
+    },
+    {
+      "value": "30+",
+      "label": "Major weddings"
+    }
   ],
-
+  "about": {
+    "heading": "Home-style vegetarian food, served for your biggest days",
+    "body": [
+      "Olive started in 2023 with a simple idea: vegetarian food that tastes like home, presented the way a special day deserves.",
+      "Since then we have catered more than 500 events across Gandhidham and nearby towns, including 30+ large weddings. Our chefs cook traditional recipes with modern presentation, and our trained hospitality staff and supervisors look after every counter and every guest."
+    ],
+    "image": {
+      "src": "",
+      "alt": "Olive chefs preparing food in the central kitchen",
+      "placeholder": "Team or kitchen photo"
+    }
+  },
   "services": [
-    "Wedding catering",
-    "Corporate lunch & events",
-    "Birthday parties & social gatherings",
-    "Festival & religious functions",
-    "School, college & industrial canteens",
-    "Live counters & themed menus"
+    {
+      "title": "Weddings",
+      "text": "Complete wedding catering with buffet setups, live counters and trained staff for every function."
+    },
+    {
+      "title": "NRI & destination weddings",
+      "text": "For families coming home to Kutch for a wedding: menus and arrangements planned with you before you arrive."
+    },
+    {
+      "title": "Corporate events",
+      "text": "Lunches, meetings, launches and staff events for businesses across Gandhidham, Kandla and Mundra."
+    },
+    {
+      "title": "Birthdays & social gatherings",
+      "text": "Birthdays, anniversaries and family get-togethers, with menus sized to your guest list."
+    },
+    {
+      "title": "Festival & religious functions",
+      "text": "Vegetarian and Jain menus for pujas, festivals and community functions."
+    },
+    {
+      "title": "School, college & industrial canteens",
+      "text": "Daily meal service for institutions and industrial units, with consistent quality and hygiene."
+    }
   ],
-
-  "compliance": [
-    "HACCP-compliant central kitchen",
-    "FSSAI licensed",
-    "Fire safety compliant",
-    "Certified food-grade materials",
-    "Daily kitchen sanitation"
+  "specialties": [
+    {
+      "title": "Pure veg & Jain menus",
+      "text": "Every menu is vegetarian. Jain preparations without onion, garlic or root vegetables on request."
+    },
+    {
+      "title": "Multi-cuisine",
+      "text": "Menus that bring together the cuisines your guests love. Tell us your favourites and we build around them."
+    },
+    {
+      "title": "Live counters",
+      "text": "Food made fresh in front of your guests, hot and on time."
+    },
+    {
+      "title": "Themed menus & custom buffets",
+      "text": "Menus and buffet layouts designed around your event, theme and guest count."
+    },
+    {
+      "title": "Eco-friendly serving",
+      "text": "Sustainable serveware available on request."
+    }
   ],
-
+  "signature_dishes": [
+    {
+      "name": "Signature dishes to be added",
+      "confirmed": false
+    }
+  ],
+  "hygiene": {
+    "heading": "Clean kitchen. Checked food. Every time.",
+    "points": [
+      "HACCP-compliant central kitchen",
+      "FSSAI licensed and compliant practices",
+      "Certified food-grade materials",
+      "Daily kitchen sanitation routine",
+      "Quality checks by experienced chefs",
+      "Fire safety compliant"
+    ]
+  },
+  "gallery": [
+    {
+      "src": "",
+      "alt": "Wedding buffet counter",
+      "placeholder": "Wedding buffet"
+    },
+    {
+      "src": "",
+      "alt": "Live chaat counter at an event",
+      "placeholder": "Live counter"
+    },
+    {
+      "src": "",
+      "alt": "Jain thali served at a function",
+      "placeholder": "Jain thali / plated food"
+    },
+    {
+      "src": "",
+      "alt": "Dessert spread",
+      "placeholder": "Desserts"
+    },
+    {
+      "src": "",
+      "alt": "Corporate lunch setup",
+      "placeholder": "Corporate lunch"
+    },
+    {
+      "src": "",
+      "alt": "Olive service staff at an event",
+      "placeholder": "Staff serving"
+    },
+    {
+      "src": "",
+      "alt": "Decorated food counter at a reception",
+      "placeholder": "Reception decor"
+    },
+    {
+      "src": "",
+      "alt": "Olive central kitchen",
+      "placeholder": "Kitchen"
+    }
+  ],
   "associations": [
-    { "name": "Holiday Village Resort", "note": "Food & beverage partner. CONFIRM permission to name/logo." }
-  ]
+    {
+      "name": "Holiday Village Resort",
+      "note": "Food & beverage partner",
+      "logo": "",
+      "confirmed": false
+    }
+  ],
+  "testimonials": [
+    {
+      "quote": "A short review from a wedding client will appear here.",
+      "name": "Client name",
+      "event": "Wedding",
+      "confirmed": false
+    },
+    {
+      "quote": "A short review from a corporate client will appear here.",
+      "name": "Client name",
+      "event": "Corporate event",
+      "confirmed": false
+    },
+    {
+      "quote": "A short review from a family function will appear here.",
+      "name": "Client name",
+      "event": "Family function",
+      "confirmed": false
+    }
+  ],
+  "faq": [
+    {
+      "q": "Is all your food pure vegetarian? Do you make Jain food?",
+      "a": "Yes. Everything we cook is pure vegetarian, and we prepare Jain menus without onion, garlic or root vegetables for any event.",
+      "confirmed": true
+    },
+    {
+      "q": "Which areas do you cater in?",
+      "a": "We cater across Gandhidham and Adipur and travel to nearby towns in Kutch, including Anjar, Bhuj, Mundra and Kandla.",
+      "confirmed": false
+    },
+    {
+      "q": "What kind of events do you cater?",
+      "a": "Weddings, NRI and destination weddings, corporate events, birthdays and social gatherings, festival and religious functions, and daily canteen service for schools, colleges and industrial units.",
+      "confirmed": true
+    },
+    {
+      "q": "How far in advance should we book?",
+      "a": "To be confirmed by the client.",
+      "confirmed": false
+    },
+    {
+      "q": "Is there a minimum number of guests?",
+      "a": "To be confirmed by the client.",
+      "confirmed": false
+    },
+    {
+      "q": "Is your kitchen certified?",
+      "a": "Yes. Our central kitchen follows HACCP practices and we are FSSAI licensed (licence no. 10724013000075).",
+      "confirmed": true
+    }
+  ],
+  "footer": {
+    "text": "Pure veg and Jain catering for weddings, corporate events and celebrations across Kutch.",
+    "credit": false
+  }
 }

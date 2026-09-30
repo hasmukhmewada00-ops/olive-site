@@ -4,7 +4,8 @@ require __DIR__ . '/app/bootstrap.php';
 
 // Full site template arrives in the build phase. Until site_live is true,
 // every visitor sees the holding page, which is kept out of Google.
-if (cfg('site_live') === true && is_file(__DIR__ . '/app/templates/home.php')) {
+// Staging always shows the full site (it is password-protected and noindex).
+if ((cfg('site_live') === true || is_staging()) && is_file(__DIR__ . '/app/templates/home.php')) {
     require __DIR__ . '/app/templates/home.php';
     exit;
 }
