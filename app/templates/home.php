@@ -106,7 +106,6 @@ $announce = content('announcement', []);
       </div>
       <figure class="hero__media">
         <?= picture($hero['image'] ?? [], 'cloche cloche--hero', '(min-width: 900px) 42vw, 90vw', true, 1200, 1500) ?>
-        <?php $steam_class = 'steam--hero'; require OLIVE_ROOT . '/partials/steam.php'; ?>
         <figcaption class="hero__seal" aria-hidden="true"><span>100%</span>Pure veg</figcaption>
       </figure>
     </div>
@@ -157,10 +156,9 @@ $announce = content('announcement', []);
   <section class="menu" id="menu">
     <div class="wrap">
       <div class="menucard">
-        <?php $steam_class = 'steam--menu'; require OLIVE_ROOT . '/partials/steam.php'; ?>
         <p class="menucard__top">Olive Catering Company</p>
         <h2 class="menucard__title">Our menus &amp; specialties</h2>
-        <span class="abhla-rule" aria-hidden="true"><i class="abhla"></i></span>
+        <span class="menucard__rule" aria-hidden="true"></span>
         <ul class="menucard__list">
           <?php foreach (content('specialties', []) as $sp): ?>
             <li>
@@ -188,7 +186,7 @@ $announce = content('announcement', []);
         <h2 class="h2"><?= e(content('hygiene.heading', '')) ?></h2>
         <p class="lead"><?= e(content('hygiene.intro', '')) ?></p>
         <?php if (!empty($b['fssai'])): ?>
-          <p class="fssai"><i class="abhla abhla--sm" aria-hidden="true"></i>FSSAI Lic. No. <strong><?= e($b['fssai']) ?></strong></p>
+          <p class="fssai">FSSAI Lic. No. <strong><?= e($b['fssai']) ?></strong></p>
         <?php endif; ?>
       </header>
       <?php $steps = content('hygiene.steps', []); ?>
@@ -376,7 +374,6 @@ $announce = content('announcement', []);
 </main>
 
 <footer class="foot">
-  <div class="toran" aria-hidden="true"><?php for ($i = 0; $i < 24; $i++): ?><i class="abhla abhla--sm"></i><?php endfor; ?></div>
   <div class="wrap foot__grid">
     <div>
       <p class="foot__logo"><?= logo_svg('olive-logo') ?></p>
@@ -421,7 +418,6 @@ $announce = content('announcement', []);
 <?php $pop = content('popup', []); if (!empty($pop['on'])): ?>
 <dialog class="qe" id="quick-enquiry" aria-labelledby="qe-title" data-delay="<?= (int) ($pop['delay_seconds'] ?? 20) ?>">
   <button class="qe__close" type="button" aria-label="Close">&times;</button>
-  <?php $steam_class = 'steam--qe'; require OLIVE_ROOT . '/partials/steam.php'; ?>
   <p class="eyebrow">Get a quote</p>
   <h2 class="qe__title" id="qe-title"><?= e($pop['heading'] ?? '') ?></h2>
   <p class="muted"><?= e($pop['text'] ?? '') ?></p>

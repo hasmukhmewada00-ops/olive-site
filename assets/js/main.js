@@ -63,21 +63,6 @@
   });
 })();
 
-/* Mirror-work glint: each abhla catches the light once as it scrolls into view */
-(function () {
-  var mirrors = document.querySelectorAll('.abhla');
-  if (!mirrors.length || !('IntersectionObserver' in window)) return;
-  var io = new IntersectionObserver(function (entries) {
-    entries.forEach(function (en, i) {
-      if (!en.isIntersecting) return;
-      var el = en.target;
-      setTimeout(function () { el.classList.add('is-lit'); }, (i % 12) * 70);
-      io.unobserve(el);
-    });
-  }, { threshold: 0.6 });
-  Array.prototype.forEach.call(mirrors, function (m) { io.observe(m); });
-})();
-
 /* Hygiene story: the photo on the left follows the step being read */
 (function () {
   var steps = document.querySelectorAll('.story__step');
