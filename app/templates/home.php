@@ -3,13 +3,14 @@ declare(strict_types=1);
 /** Full one-page site. Included by index.php. */
 require_once OLIVE_ROOT . '/app/render.php';
 require_once OLIVE_ROOT . '/app/leads.php';
+require_once OLIVE_ROOT . '/app/blog.php';
 
 $page_type = 'home';
+$base = '';
 $b = content('business', []);
 $hero = content('hero', []);
-$name = (string) ($b['name'] ?? 'Olive Catering Company');
-$waMsg = (string) content('holding.whatsapp_message', 'Hi Olive, I would like to enquire about catering for my event. (via website)');
 $phone = (string) ($b['phone'] ?? '');
+$waMsg = (string) content('holding.whatsapp_message', 'Hi Olive, I would like to enquire about catering for my event. (via website)');
 
 // Form state after a failed submit (only touch the session if one exists)
 $form = ['errors' => [], 'old' => []];
@@ -22,73 +23,21 @@ $err = $form['errors'];
 $old = $form['old'];
 $val = fn (string $k) => e($old[$k] ?? '');
 
-$title = 'Olive Catering Company | Pure Veg & Jain Caterers in Gandhidham, Kutch';
-$desc = 'Pure veg and Jain caterers in Gandhidham and Adipur. Wedding, corporate and event catering across Kutch with live counters and trained staff. Since 2023.';
-$gallery = array_values(array_filter(content('gallery', []), 'visible'));
+$gallery = array_values(array_filter(content('gallery', []), fn ($g) => visible($g) && (!empty($g['src']) || is_staging())));
 $testimonials = array_values(array_filter(content('testimonials', []), 'visible'));
 $associations = array_values(array_filter(content('associations', []), 'visible'));
 $faqs = array_values(array_filter(content('faq', []), 'visible'));
 $dishes = array_values(array_filter(content('signature_dishes', []), 'visible'));
-$announce = content('announcement', []);
-?><!doctype html>
-<html lang="en-IN">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<?php require OLIVE_ROOT . '/partials/loader-head.php'; ?>
-<?php require OLIVE_ROOT . '/partials/gtm-head.php'; ?>
-<title><?= e($title) ?></title>
-<meta name="description" content="<?= e($desc) ?>">
-<?php if (is_staging()): ?><meta name="robots" content="noindex, nofollow"><?php endif; ?>
-<link rel="canonical" href="<?= e(canonical_url('/')) ?>">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="<?= e($name) ?>">
-<meta property="og:title" content="<?= e($title) ?>">
-<meta property="og:description" content="<?= e($desc) ?>">
-<meta property="og:url" content="<?= e(canonical_url('/')) ?>">
-<meta property="og:image" content="<?= e(canonical_url('/assets/img/og-image.jpg')) ?>">
-<meta property="og:locale" content="en_IN">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#3A4733">
-<link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="<?= e(asset('assets/css/main.css')) ?>">
-<script type="application/ld+json"><?= schema_json() ?></script>
-</head>
-<body>
-<?php require OLIVE_ROOT . '/partials/gtm-body.php'; ?>
-<?php require OLIVE_ROOT . '/partials/loader.php'; ?>
-<a class="skip" href="#main">Skip to content</a>
 
-<?php if (is_staging()): ?>
-<div class="stagebar">Staging preview &middot; not public &middot; items tagged <span class="tbc">to confirm</span> are hidden on the live site</div>
-<?php endif; ?>
-
-<?php if (!empty($announce['on']) && !empty($announce['text'])): ?>
-<div class="announce"><?= e($announce['text']) ?></div>
-<?php endif; ?>
-
-<header class="top" id="top">
-  <div class="wrap top__row">
-    <a class="brand" href="#top" aria-label="<?= e($name) ?> home">
-      <?= logo_svg('olive-wordmark', 'brand__logo') ?>
-    </a>
-    <nav class="nav" id="nav" aria-label="Main">
-      <a href="#about">About</a>
-      <a href="#services">Services</a>
-      <a href="#menu">Menu</a>
-      <a href="#gallery">Gallery</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <div class="top__cta" data-track-location="header">
-      <a class="link-call" href="<?= e(tel_href()) ?>"><?= $phone !== '' ? e($phone) : 'Call us' ?></a>
-      <a class="btn btn--cta btn--sm" href="<?= e(wa_href($waMsg)) ?>"<?= str_starts_with(wa_href($waMsg), 'http') ? ' target="_blank" rel="noopener"' : '' ?>>WhatsApp</a>
-      <button class="burger" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu"><span></span><span></span></button>
-    </div>
-  </div>
-</header>
+$meta = [
+    'title' => (string) content('seo.title', 'Olive Catering Company'),
+    'desc' => (string) content('seo.description', ''),
+    'canonical' => canonical_url('/'),
+    'schema' => schema_json(),
+];
+require OLIVE_ROOT . '/partials/site-head.php';
+?>
+<?php require OLIVE_ROOT . '/partials/site-header.php'; ?>
 
 <main id="main">
 
@@ -114,8 +63,8 @@ $announce = content('announcement', []);
   <!-- Trust -->
   <section class="trust" aria-label="Olive in numbers">
     <ul class="wrap trust__list">
-      <?php foreach (content('trust', []) as $t): ?>
-        <li><strong><?= e($t['value']) ?></strong><span><?= e($t['label']) ?></span></li>
+      <?php foreach (array_filter(content('trust', []), 'visible') as $t): ?>
+        <li><strong><?= e($t['value']) ?></strong><span><?= e($t['label']) ?><?= tbc($t) ?></span></li>
       <?php endforeach; ?>
     </ul>
   </section>
@@ -139,12 +88,12 @@ $announce = content('announcement', []);
     <div class="wrap">
       <header class="section__head">
         <p class="eyebrow">What we cater</p>
-        <h2 class="h2">Catering for every occasion in Kutch</h2>
+        <h2 class="h2"><?= e(content('services_heading', '')) ?></h2>
       </header>
       <ul class="services__grid">
-        <?php foreach (content('services', []) as $s): ?>
+        <?php foreach (array_filter(content('services', []), 'visible') as $s): ?>
           <li class="svc">
-            <h3 class="svc__title"><?= e($s['title']) ?></h3>
+            <h3 class="svc__title"><?php if (!empty($s['link'])): ?><a href="<?= e($s['link']) ?>"><?= e($s['title']) ?></a><?php else: ?><?= e($s['title']) ?><?php endif; ?><?= tbc($s) ?></h3>
             <p><?= e($s['text']) ?></p>
           </li>
         <?php endforeach; ?>
@@ -152,12 +101,42 @@ $announce = content('announcement', []);
     </div>
   </section>
 
+
+  <!-- Service features: Pure veg & Jain, Weddings, Corporate, Family & social -->
+  <?php foreach (content('features', []) as $fi => $f): $post = !empty($f['post']) ? blog_post((string) $f['post']) : null; ?>
+  <section class="section feature<?= $fi % 2 ? ' feature--flip' : '' ?>" id="<?= e($f['id']) ?>">
+    <div class="wrap feature__grid">
+      <figure class="feature__media">
+        <?= picture($f['image'] ?? [], 'feature__img', '(min-width: 900px) 46vw, 92vw', false, 1600, 1200) ?>
+      </figure>
+      <div class="feature__text">
+        <p class="eyebrow"><?= e($f['eyebrow'] ?? '') ?></p>
+        <h2 class="h2"><?= e($f['heading']) ?></h2>
+        <?php foreach ($f['body'] ?? [] as $para): ?><p class="lead"><?= e($para) ?></p><?php endforeach; ?>
+        <?php if (!empty($f['points'])): ?>
+          <ul class="ticks"><?php foreach ($f['points'] as $pt): ?><li><?= e($pt) ?></li><?php endforeach; ?></ul>
+        <?php endif; ?>
+        <?php if (!empty($f['sub']) && visible($f['sub'])): ?>
+          <div class="feature__sub">
+            <h3><?= e($f['sub']['heading']) ?><?= tbc($f['sub']) ?></h3>
+            <p><?= e($f['sub']['text']) ?></p>
+          </div>
+        <?php endif; ?>
+        <div class="feature__actions" data-track-location="feature_<?= e($f['id']) ?>">
+          <a class="btn btn--cta" href="#enquiry">Get a quote</a>
+          <?php if ($post): ?><a class="link-more" href="<?= e(blog_url($post)) ?>">Read: <?= e($post['short'] ?? $post['title']) ?></a><?php endif; ?>
+        </div>
+      </div>
+    </div>
+  </section>
+  <?php endforeach; ?>
+
   <!-- Menu card (signature section) -->
   <section class="menu" id="menu">
     <div class="wrap">
       <div class="menucard">
         <p class="menucard__top">Olive Catering Company</p>
-        <h2 class="menucard__title">Our menus &amp; specialties</h2>
+        <h2 class="menucard__title"><?= e(content('menu_heading', 'Our menus')) ?></h2>
         <span class="menucard__rule" aria-hidden="true"></span>
         <ul class="menucard__list">
           <?php foreach (content('specialties', []) as $sp): ?>
@@ -267,13 +246,44 @@ $announce = content('announcement', []);
   </section>
   <?php endif; ?>
 
+
+  <?php $areas = array_values(array_filter(content('areas.list', []), 'visible')); if ($areas): ?>
+  <!-- Service areas -->
+  <section class="section areas" id="areas">
+    <div class="wrap areas__grid">
+      <header>
+        <p class="eyebrow">Where we cater</p>
+        <h2 class="h2"><?= e(content('areas.heading', '')) ?></h2>
+        <p class="lead"><?= e(content('areas.intro', '')) ?></p>
+      </header>
+      <ul class="areas__list">
+        <?php foreach ($areas as $ar): ?><li><?= e($ar['name']) ?><?= tbc($ar) ?></li><?php endforeach; ?>
+      </ul>
+    </div>
+  </section>
+  <?php endif; ?>
+
+  <?php $posts = array_slice(blog_posts(), 0, 3); if ($posts && blog_enabled()): ?>
+  <!-- From the blog -->
+  <section class="section bloglist">
+    <div class="wrap">
+      <header class="section__head">
+        <p class="eyebrow">Planning guides</p>
+        <h2 class="h2">Helpful reads before you book</h2>
+      </header>
+      <?php $cards = $posts; require OLIVE_ROOT . '/partials/blog-cards.php'; ?>
+      <p class="bloglist__all"><a class="link-more" href="/blog/">All articles</a></p>
+    </div>
+  </section>
+  <?php endif; ?>
+
   <!-- FAQ -->
   <?php if ($faqs): ?>
   <section class="section faq">
     <div class="wrap faq__grid">
       <header>
         <p class="eyebrow">Questions</p>
-        <h2 class="h2">Good to know before you book</h2>
+        <h2 class="h2">Questions about Olive Catering Company</h2>
       </header>
       <div class="faq__list">
         <?php foreach ($faqs as $f): ?>
@@ -373,75 +383,4 @@ $announce = content('announcement', []);
   </section>
 </main>
 
-<footer class="foot">
-  <div class="wrap foot__grid">
-    <div>
-      <p class="foot__logo"><?= logo_svg('olive-logo') ?></p>
-      <p class="foot__text"><?= e(content('footer.text', '')) ?></p>
-    </div>
-    <nav aria-label="Footer">
-      <a href="#about">About</a><a href="#services">Services</a><a href="#menu">Menu</a><a href="#gallery">Gallery</a><a href="#contact">Contact</a>
-    </nav>
-    <div class="foot__meta" data-track-location="footer">
-      <?php if (!empty($b['instagram'])): ?><a href="https://www.instagram.com/<?= e($b['instagram']) ?>/" target="_blank" rel="noopener">Instagram</a><?php endif; ?>
-      <?php if (!empty($b['fssai'])): ?><p>FSSAI Lic. No. <?= e($b['fssai']) ?></p><?php endif; ?>
-      <p>Serving <?= e(implode(', ', $b['area_served'] ?? [])) ?></p>
-    </div>
-  </div>
-  <div class="wrap foot__base">
-    <p>&copy; <?= date('Y') ?> <?= e($name) ?>. All rights reserved.</p>
-    <?php if (content('footer.credit') === true): ?><p>Website by One Man Marketing</p><?php endif; ?>
-  </div>
-</footer>
-
-<?php $waH = wa_href($waMsg); $waExt = str_starts_with($waH, 'http') ? ' target="_blank" rel="noopener"' : ''; ?>
-<div class="float" data-track-location="float">
-  <a class="float__btn float__btn--call" href="<?= e(tel_href()) ?>" aria-label="Call Olive Catering Company">
-    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1Z"/></svg>
-  </a>
-  <a class="float__btn float__btn--wa" href="<?= e($waH) ?>"<?= $waExt ?> aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.2Z"/></svg>
-  </a>
-</div>
-
-<nav class="actionbar" aria-label="Contact Olive" data-track-location="sticky_bar">
-  <a class="actionbar__btn actionbar__btn--call" href="<?= e(tel_href()) ?>">
-    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1Z"/></svg>
-    Call now
-  </a>
-  <a class="actionbar__btn actionbar__btn--wa" href="<?= e($waH) ?>"<?= $waExt ?>>
-    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/></svg>
-    WhatsApp
-  </a>
-</nav>
-
-<?php $pop = content('popup', []); if (!empty($pop['on'])): ?>
-<dialog class="qe" id="quick-enquiry" aria-labelledby="qe-title" data-delay="<?= (int) ($pop['delay_seconds'] ?? 20) ?>">
-  <button class="qe__close" type="button" aria-label="Close">&times;</button>
-  <p class="eyebrow">Get a quote</p>
-  <h2 class="qe__title" id="qe-title"><?= e($pop['heading'] ?? '') ?></h2>
-  <p class="muted"><?= e($pop['text'] ?? '') ?></p>
-  <form class="form qe__form" action="/enquiry.php" method="post" id="qe-form" data-olive-form>
-    <input type="hidden" name="form_token" value="<?= e(form_token()) ?>">
-    <input type="hidden" name="form_source" value="popup">
-    <div class="hp" aria-hidden="true"><label>Leave this empty <input type="text" name="company_website" tabindex="-1" autocomplete="off"></label></div>
-    <div class="field"><label for="qe-name">Your name</label><input id="qe-name" name="name" type="text" autocomplete="name" required maxlength="80"></div>
-    <div class="field"><label for="qe-phone">Mobile number</label><input id="qe-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="10-digit mobile"></div>
-    <div class="field"><label for="qe-type">Type of event</label>
-      <select id="qe-type" name="event_type" required><option value="">Choose one</option><?php foreach (OLIVE_EVENT_TYPES as $t): ?><option><?= e($t) ?></option><?php endforeach; ?></select>
-    </div>
-    <button class="btn btn--cta btn--block" type="submit">Call me back</button>
-    <p class="form-note">We only use your number to reply to this enquiry. <a href="/privacy.php">Privacy</a></p>
-  </form>
-</dialog>
-<?php endif; ?>
-
-<dialog class="lightbox" id="lightbox" aria-label="Photo">
-  <button class="lightbox__close" type="button" aria-label="Close photo">&times;</button>
-  <img alt="">
-</dialog>
-
-<script src="<?= e(asset('assets/js/attribution.js')) ?>" defer></script>
-<script src="<?= e(asset('assets/js/main.js')) ?>" defer></script>
-</body>
-</html>
+<?php require OLIVE_ROOT . '/partials/site-footer.php'; ?>

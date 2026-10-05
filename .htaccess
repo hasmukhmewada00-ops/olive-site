@@ -32,9 +32,17 @@ ServerSignature Off
 
   # Dynamic robots.txt (staging blocks everything, live allows)
   RewriteRule ^robots\.txt$ robots.php [L]
+  RewriteRule ^sitemap\.xml$ sitemap.php [L]
+  RewriteRule ^llms\.txt$ llms.php [L]
+
+  # Blog: /blog/ and /blog/{slug}/ (trailing slash is canonical)
+  RewriteRule ^blog$ /blog/ [R=301,L]
+  RewriteRule ^blog/$ blog.php [L,QSA]
+  RewriteRule ^blog/([a-z0-9-]+)$ /blog/$1/ [R=301,L]
+  RewriteRule ^blog/([a-z0-9-]+)/$ post.php?slug=$1 [L,QSA]
 
   # Block private folders and files from the web
-  RewriteRule ^(app|data|docs|partials)(/|$) - [F,L]
+  RewriteRule ^(app|data|docs|partials|blog-content)(/|$) - [F,L]
   RewriteRule (^|/)\. - [F,L]
   RewriteRule ^(config\.php|config\.sample\.php|content\.sample\.json|README\.md)$ - [F,L]
   RewriteRule \.(md|log|sh|bak|sql|dist|lock)$ - [F,L]

@@ -19,3 +19,4 @@ echo "\n";
 if (cfg('site_live') === true) {
     echo 'Sitemap: ' . canonical_url('/sitemap.xml') . "\n";
 }
+// AI and answer-engine crawlers are welcome (GEO). They follow the rules above.

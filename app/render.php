@@ -70,19 +70,40 @@ function full_address(): string
     return implode(', ', array_filter([$a['street'] ?? '', $a['locality'] ?? '', ($a['district'] ?? '') ?: null, trim(($a['region'] ?? '') . ' ' . ($a['postal_code'] ?? ''))]));
 }
 
-/** LocalBusiness + FAQPage structured data from content (confirmed items only). */
+/** Confirmed service areas (city names). Unconfirmed ones only on staging. */
+function service_areas(bool $confirmedOnly = true): array
+{
+    $list = content('areas.list', []);
+    return array_values(array_map(fn ($a) => $a['name'], array_filter($list, fn ($a) => !$confirmedOnly || ($a['confirmed'] ?? true) !== false)));
+}
+
+/**
+ * Entity graph for search and AI engines: LocalBusiness (caterer) + WebSite + FAQPage.
+ * Only confirmed facts go into the schema; nothing marked confirmed:false is published.
+ */
 function schema_json(): string
 {
     $b = content('business', []);
     $a = $b['address'] ?? [];
+    $name = (string) ($b['name'] ?? 'Olive Catering Company');
+    $services = [];
+    foreach (content('features', []) as $f) {
+        $services[] = ['@type' => 'Offer', 'itemOffered' => ['@type' => 'Service', 'name' => $f['heading'], 'serviceType' => 'Catering', 'description' => implode(' ', $f['body'] ?? [])]];
+    }
     $biz = [
-        '@type' => 'FoodEstablishment',
+        '@type' => ['LocalBusiness', 'FoodEstablishment'],
         '@id' => canonical_url('/#business'),
-        'name' => $b['name'] ?? 'Olive Catering Company',
-        'description' => content('footer.text', ''),
+        'name' => $name,
+        'description' => (string) content('seo.description', ''),
+        'slogan' => 'Pure Veg & Jain Catering in Gandhidham',
         'url' => canonical_url('/'),
-        'image' => canonical_url('/assets/img/og-image.jpg'),
-        'servesCuisine' => ['Vegetarian', 'Jain', 'Indian'],
+        'image' => array_values(array_filter([
+            canonical_url('/assets/img/og-image.jpg'),
+            !empty(content('hero.image.src')) ? canonical_url((string) content('hero.image.src')) : null,
+        ])),
+        'logo' => canonical_url('/assets/img/logo/olive-logo.svg'),
+        'servesCuisine' => ['Pure Vegetarian', 'Jain', 'Gujarati', 'Indian'],
+        'knowsAbout' => ['Wedding catering', 'Jain catering', 'Pure vegetarian catering', 'Corporate catering', 'Event catering', 'Live food counters'],
         'priceRange' => '₹₹',
         'foundingDate' => (string) ($b['established'] ?? ''),
         'address' => [
@@ -93,12 +114,16 @@ function schema_json(): string
             'postalCode' => $a['postal_code'] ?? '',
             'addressCountry' => $a['country'] ?? 'IN',
         ],
-        'areaServed' => array_map(fn ($c) => ['@type' => 'City', 'name' => $c], $b['area_served'] ?? []),
+        'areaServed' => array_map(fn ($c) => ['@type' => 'City', 'name' => $c . ', Gujarat'], service_areas()),
+        'hasOfferCatalog' => ['@type' => 'OfferCatalog', 'name' => 'Catering services', 'itemListElement' => $services],
         'sameAs' => array_values(array_filter([
             !empty($b['instagram']) ? 'https://www.instagram.com/' . $b['instagram'] . '/' : null,
             $b['gbp_url'] ?? null,
         ])),
     ];
+    if (!empty($b['fssai'])) {
+        $biz['identifier'] = ['@type' => 'PropertyValue', 'propertyID' => 'FSSAI licence', 'value' => (string) $b['fssai']];
+    }
     if (!empty($b['phone'])) {
         $biz['telephone'] = '+' . phone_digits((string) $b['phone']);
     }
@@ -112,11 +137,15 @@ function schema_json(): string
         $biz['openingHours'] = $b['opening_hours'];
     }
 
+    $graph = [
+        $biz,
+        ['@type' => 'WebSite', '@id' => canonical_url('/#website'), 'url' => canonical_url('/'), 'name' => $name, 'publisher' => ['@id' => canonical_url('/#business')], 'inLanguage' => 'en-IN'],
+    ];
     $faqs = array_filter(content('faq', []), fn ($f) => ($f['confirmed'] ?? true) !== false);
-    $graph = [$biz];
     if ($faqs) {
         $graph[] = [
             '@type' => 'FAQPage',
+            '@id' => canonical_url('/#faq'),
             'mainEntity' => array_values(array_map(fn ($f) => [
                 '@type' => 'Question',
                 'name' => $f['q'],
