@@ -199,6 +199,10 @@ button { font: inherit; }
 .svc__title a { color: inherit; text-decoration: none; background: linear-gradient(var(--gold), var(--gold)) 0 100% / 0 1px no-repeat; transition: background-size .25s ease; }
 .svc__title a:hover { background-size: 100% 1px; }
 .svc p { color: var(--muted); font-size: 15.5px; }
+.local { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin: 0 0 8px; line-height: 1.3; }
+.local__gu { font: 500 17px/1.3 "Noto Serif Gujarati", "Noto Sans Gujarati", "Gujarati Sangam MN", "Shruti", serif; color: #8A6A2E; }
+.local__tr { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.feature__text .local { margin-top: -4px; }
 
 /* ---------- menu card (signature) ---------- */
 .menu { background: var(--olive-deep); padding: var(--section) 0; }

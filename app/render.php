@@ -50,6 +50,23 @@ function picture(array $img, string $class, string $sizes = '100vw', bool $eager
     return '<img class="' . e($class) . '" src="' . e($src) . '"' . $srcset . ' width="' . $w . '" height="' . $h . '" alt="' . e($alt) . '"' . $load . '>';
 }
 
+/** Gujarati name line (script + romanised) shown above a service or feature title. */
+function local_name(array $item): string
+{
+    $l = $item['local'] ?? [];
+    if (empty($l['gu']) && empty($l['tr'])) {
+        return '';
+    }
+    $out = '<p class="local">';
+    if (!empty($l['gu'])) {
+        $out .= '<span class="local__gu" lang="gu">' . e((string) $l['gu']) . '</span>';
+    }
+    if (!empty($l['tr'])) {
+        $out .= '<span class="local__tr" lang="gu-Latn">' . e((string) $l['tr']) . '</span>';
+    }
+    return $out . '</p>';
+}
+
 /** WhatsApp link, or the enquiry form while the number is not confirmed. */
 function wa_href(string $message): string
 {

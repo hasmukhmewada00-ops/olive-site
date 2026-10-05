@@ -28,7 +28,7 @@ $siteName = (string) content('business.name', 'Olive Catering Company');
 <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Manrope:wght@400;500;600;700&family=Noto+Serif+Gujarati:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= e(asset('assets/css/main.css')) ?>">
 <?php if ($meta['schema'] !== ''): ?><script type="application/ld+json"><?= $meta['schema'] ?></script><?php endif; ?>
 </head>

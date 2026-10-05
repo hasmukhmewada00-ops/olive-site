@@ -93,6 +93,7 @@ require OLIVE_ROOT . '/partials/site-head.php';
       <ul class="services__grid">
         <?php foreach (array_filter(content('services', []), 'visible') as $s): ?>
           <li class="svc">
+            <?= local_name($s) ?>
             <h3 class="svc__title"><?php if (!empty($s['link'])): ?><a href="<?= e($s['link']) ?>"><?= e($s['title']) ?></a><?php else: ?><?= e($s['title']) ?><?php endif; ?><?= tbc($s) ?></h3>
             <p><?= e($s['text']) ?></p>
           </li>
@@ -111,6 +112,7 @@ require OLIVE_ROOT . '/partials/site-head.php';
       </figure>
       <div class="feature__text">
         <p class="eyebrow"><?= e($f['eyebrow'] ?? '') ?></p>
+        <?= local_name($f) ?>
         <h2 class="h2"><?= e($f['heading']) ?></h2>
         <?php foreach ($f['body'] ?? [] as $para): ?><p class="lead"><?= e($para) ?></p><?php endforeach; ?>
         <?php if (!empty($f['points'])): ?>

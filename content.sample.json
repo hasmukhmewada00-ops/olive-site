@@ -86,31 +86,55 @@
   "services": [
     {
       "title": "Weddings",
+      "local": {
+        "gu": "લગ્ન પ્રસંગ",
+        "tr": "Lagan Prasang"
+      },
       "text": "Complete wedding catering with buffet setups, live counters and trained staff for every function.",
       "link": "#weddings"
     },
     {
       "title": "NRI & destination weddings",
+      "local": {
+        "gu": "વતનમાં લગ્ન",
+        "tr": "Vatan ma Lagan"
+      },
       "text": "For families coming home to Kutch for a wedding, with menus and arrangements planned before you arrive.",
       "link": "#weddings"
     },
     {
       "title": "Corporate events",
+      "local": {
+        "gu": "કંપનીના પ્રસંગ",
+        "tr": "Company na Prasang"
+      },
       "text": "Lunches, meetings, launches and staff events for businesses in Gandhidham.",
       "link": "#corporate"
     },
     {
       "title": "Birthdays & social gatherings",
-      "text": "Birthdays, anniversaries and family get-togethers, with menus sized to your guest list.",
+      "local": {
+        "gu": "પારિવારિક પ્રસંગ",
+        "tr": "Parivarik Prasang"
+      },
+      "text": "Birthdays, anniversaries, Janoi, Simant and family get-togethers, with menus sized to your guest list.",
       "link": "#social"
     },
     {
       "title": "Festival & religious functions",
-      "text": "Vegetarian and Jain menus for pujas, festivals and community functions.",
+      "local": {
+        "gu": "જમણવાર અને ધાર્મિક પ્રસંગ",
+        "tr": "Jamanvar & Dharmik Prasang"
+      },
+      "text": "Vegetarian and Jain menus for pujas, festivals, Navratri and community jamanvar.",
       "link": "#social"
     },
     {
       "title": "School, college & industrial canteens",
+      "local": {
+        "gu": "રોજનું ભોજન",
+        "tr": "Roj nu Bhojan"
+      },
       "text": "Daily meal service for institutions and industrial units.",
       "link": "#corporate",
       "confirmed": false
@@ -319,6 +343,10 @@
     {
       "id": "pure-veg-jain",
       "eyebrow": "Pure veg & Jain",
+      "local": {
+        "gu": "શુદ્ધ શાકાહારી અને જૈન",
+        "tr": "Shuddh Shakahari & Jain"
+      },
       "heading": "Pure Veg & Jain Catering in Gandhidham",
       "body": [
         "Everything Olive Catering Company cooks is pure vegetarian. Pure veg is not one option on our menu; it is the whole kitchen.",
@@ -341,6 +369,10 @@
     {
       "id": "weddings",
       "eyebrow": "Weddings",
+      "local": {
+        "gu": "લગ્ન પ્રસંગ",
+        "tr": "Lagan Prasang"
+      },
       "heading": "Wedding Caterers in Gandhidham for Memorable Celebrations",
       "body": [
         "A wedding is several meals across several days, each with its own mood. Olive Catering Company caters wedding functions in Gandhidham with buffet setups, live counters and trained hospitality staff and supervisors, so your family can be with your guests instead of the kitchen."
@@ -382,6 +414,10 @@
     {
       "id": "social",
       "eyebrow": "Family & social",
+      "local": {
+        "gu": "પારિવારિક પ્રસંગ",
+        "tr": "Parivarik Prasang"
+      },
       "heading": "Catering for Family & Social Events",
       "body": [
         "Birthdays, anniversaries, pujas, festivals and community functions: Olive Catering Company brings the same care to a family gathering as to a wedding, with live counters and themed menus when you want something special."
