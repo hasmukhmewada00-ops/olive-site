@@ -27,7 +27,8 @@ $out[] = '- Business type: Catering company (caterer)';
 $out[] = '- Food: 100% pure vegetarian; Jain menus prepared without onion, garlic or root vegetables';
 $out[] = '- Established: ' . ($b['established'] ?? '');
 $a = $b['address'] ?? [];
-$out[] = '- Based in: ' . trim(($a['locality'] ?? '') . ', Gandhidham, Kutch, Gujarat, India', ', ');
+$out[] = '- Based in: ' . implode(', ', array_unique(array_filter([$a['locality'] ?? '', 'Gandhidham', 'Kutch', 'Gujarat', 'India'])));
+$out[] = '- Address: ' . full_address();
 if ($areas) {
     $out[] = '- Service areas: ' . implode(', ', $areas);
 }

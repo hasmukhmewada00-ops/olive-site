@@ -1,6 +1,6 @@
 # olive-site
 
-Website for **Olive Catering Company** (Adipur / Gandhidham, Kutch). Built and maintained by One Man Marketing.
+Website for **Olive Catering Company** (Gandhidham, Kutch). Built and maintained by One Man Marketing.
 
 Plain PHP 8.3+ on Hostinger shared hosting. No WordPress, no database, no build step.
 

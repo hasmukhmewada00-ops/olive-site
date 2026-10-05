@@ -10,14 +10,14 @@
     "email": "olivecatering2025@gmail.com",
     "instagram": "olive288711",
     "address": {
-      "street": "Plot No. 79, Ward No DC-5, Ramchandani Road, Near New High Court",
-      "locality": "Adipur",
+      "street": "Radisson Resort and Spa, Rajvi Resort Complex, Survey No. 68/1, Airport Road, Galpadar",
+      "locality": "Gandhidham",
       "district": "Kutch",
       "region": "Gujarat",
-      "postal_code": "370205",
+      "postal_code": "370201",
       "country": "IN"
     },
-    "map_query": "Ramchandani Road, Near New High Court, Adipur, Gujarat 370205",
+    "map_query": "Radisson Resort and Spa, Airport Road, Galpadar, Gandhidham, Gujarat 370201",
     "hours": "",
     "fssai": "10724013000075",
     "gstin": "",
@@ -72,7 +72,7 @@
   "about": {
     "heading": "A Trusted Catering Company in Gandhidham",
     "body": [
-      "Olive Catering Company started in 2023 in Adipur with a simple idea: vegetarian food that tastes like home, presented the way a special day deserves.",
+      "Olive Catering Company started in 2023 in Kutch with a simple idea: vegetarian food that tastes like home, presented the way a special day deserves.",
       "Our chefs cook traditional recipes with modern presentation, and our trained hospitality staff and supervisors look after every counter and every guest, from intimate family functions to large weddings."
     ],
     "image": {
@@ -289,7 +289,7 @@
     },
     {
       "q": "Who are the wedding caterers in Gandhidham?",
-      "a": "Olive Catering Company is a pure veg and Jain wedding caterer based in Adipur, Gandhidham. Since 2023 it has catered weddings and family celebrations with buffet setups, live counters and trained hospitality staff.",
+      "a": "Olive Catering Company is a pure veg and Jain wedding caterer based in Gandhidham, at Radisson Resort and Spa on Airport Road. Since 2023 it has catered weddings and family celebrations with buffet setups, live counters and trained hospitality staff.",
       "confirmed": true
     },
     {
@@ -299,7 +299,7 @@
     },
     {
       "q": "Where does Olive Catering Company provide catering services?",
-      "a": "Olive Catering Company is based in Adipur and caters events in Gandhidham and nearby towns in Kutch, including Anjar, Bhuj, Mundra and Kandla.",
+      "a": "Olive Catering Company is based in Gandhidham and caters events in Gandhidham, Adipur and nearby towns in Kutch, including Anjar, Bhuj, Mundra and Kandla.",
       "confirmed": false
     },
     {
@@ -434,7 +434,7 @@
   "menu_heading": "Thoughtfully Planned Catering Menus",
   "areas": {
     "heading": "Catering Services Across Gandhidham & Kutch",
-    "intro": "Olive Catering Company is based in Adipur and caters weddings, corporate events and celebrations across Gandhidham and Kutch.",
+    "intro": "Olive Catering Company is based at Radisson Resort and Spa on Airport Road, Gandhidham, and caters weddings, corporate events and celebrations across Gandhidham, Adipur and Kutch.",
     "list": [
       {
         "name": "Gandhidham"

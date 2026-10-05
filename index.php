@@ -63,7 +63,7 @@ $name = (string) ($b['name'] ?? 'Olive Catering Company');
       </p>
     <?php endif; ?>
 
-    <p class="hold__place">Adipur &middot; Gandhidham &middot; Kutch, Gujarat</p>
+    <p class="hold__place">Gandhidham &middot; Adipur &middot; Kutch, Gujarat</p>
   </div>
 </main>
 <script src="<?= e(asset('assets/js/attribution.js')) ?>" defer></script>

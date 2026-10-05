@@ -377,7 +377,7 @@ require OLIVE_ROOT . '/partials/site-head.php';
         </ul>
         <?php $mq = rawurlencode((string) ($b['map_query'] ?? full_address())); ?>
         <div class="map">
-          <iframe title="Map to Olive Catering Company, Adipur" src="https://www.google.com/maps?q=<?= e($mq) ?>&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe title="Map to Olive Catering Company, Gandhidham" src="https://www.google.com/maps?q=<?= e($mq) ?>&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <a class="link-map" data-track-map href="https://www.google.com/maps/search/?api=1&amp;query=<?= e($mq) ?>" target="_blank" rel="noopener">Get directions</a>
       </aside>
