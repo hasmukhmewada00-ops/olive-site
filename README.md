@@ -1,6 +1,6 @@
 # olive-site
 
-Website for **Olive Catering Company** (Gandhidham, Kutch). Built and maintained by One Man Marketing.
+Website for **Olive Catering Company** (Gandhidham, Kutch, serving across Gujarat). Built and maintained by One Man Marketing.
 
 Plain PHP 8.3+ on Hostinger shared hosting. No WordPress, no database, no build step.
 
@@ -22,7 +22,9 @@ enquiry.php            Form handler: spam checks, validation, CSV backup, email,
 thank-you.php          Fires generate_lead once per lead (dataLayer), WhatsApp follow-up
 robots.php             Served as /robots.txt
 404.php
-app/bootstrap.php      Settings, staging gate, helpers (blocked from web)
+admin/                 Admin panel (login, contact details, photos, gallery, associations, areas, reviews...)
+app/bootstrap.php      Settings, staging gate, content loading + admin overrides, helpers (blocked from web)
+app/cms.php            Admin library: login, CSRF, backups, image processing (blocked from web)
 app/leads.php          Lead delivery functions
 app/lib/PHPMailer/     PHPMailer 6.10.0 (LGPL), SMTP email
 assets/css, js, img    Theme files
@@ -30,8 +32,8 @@ assets/js/attribution.js  UTM / click-ID capture, hidden form fields, click even
 partials/              GTM snippets (blocked from web)
 docs/apps-script.gs    Google Sheet logger (blocked from web)
 config.sample.php      Settings template -> copy to config.php on each server
-content.sample.json    Seed content -> copied to data/content.json on first install
-data/                  NOT in git: content.json, leads CSV, backups, logs (blocked from web)
+content.sample.json    Base content (copy, SEO, FAQ, sections). Edited in code only.
+data/                  NOT in git: cms.json (admin edits), backups, leads CSV, logs (blocked from web)
 uploads/               NOT in git: client images (scripts cannot run here)
 ```
 
@@ -43,7 +45,18 @@ uploads/               NOT in git: client images (scripts cannot run here)
    - `staging_pass_hash` (staging only): `php -r "echo password_hash('PASSWORD', PASSWORD_DEFAULT);"`
    - `app_secret`: `php -r "echo bin2hex(random_bytes(32));"`
    - SMTP password once `info@olivecateringcompany.in` exists
-3. Leave `site_live` = `false` until launch day.
+3. Set `admin_pass_hash` (same command as above) to unlock `/admin/`.
+4. Leave `site_live` = `false` until launch day.
+
+## Admin panel (/admin/)
+
+- One login (`admin_user` / `admin_pass_hash` in config.php). 5 wrong tries = 15 min lockout. 30 min idle logout.
+- Editable: calling + WhatsApp numbers, email, Instagram, hours, FSSAI, address, map, GBP link; every section photo; gallery (add, describe, reorder, remove, max 30); associations (current / previous); highlights strip; service areas; live counter dishes; client reviews; announcement bar; pop-up; footer text.
+- Not editable (protects SEO): headings, service and section copy, FAQ, title/meta, schema structure.
+- Edits are saved to `data/cms.json` and applied on top of `content.sample.json`, so code updates to copy still flow through.
+- Every save backs up the previous version (last 20 kept, one-click restore) and sends `X-LiteSpeed-Purge: *`.
+- Photos: JPG/PNG/WebP, real type checked, min 800 px, re-encoded through GD (strips EXIF and anything hidden), auto-rotated, saved as WebP at 480/960/1600 px under byte budgets (hero 1600 under 250 KB), named from the alt text. Alt text is mandatory (10 to 125 chars).
+- Staging and live each have their own admin and their own `data/` and `uploads/`.
 
 `config.php`, `data/` and `uploads/` are never touched by a deploy.
 

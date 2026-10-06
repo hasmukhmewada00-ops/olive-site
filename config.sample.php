@@ -21,6 +21,12 @@ return [
     'staging_user' => 'olive',
     'staging_pass_hash' => '',
 
+    // Admin panel (/admin/) login. One user. Make the hash with:
+    // php -r "echo password_hash('your-password', PASSWORD_DEFAULT);"
+    // The admin stays locked while admin_pass_hash is empty.
+    'admin_user' => 'olive',
+    'admin_pass_hash' => '',
+
     // Tracking
     'gtm_id' => 'GTM-TKTF7C5X',
 

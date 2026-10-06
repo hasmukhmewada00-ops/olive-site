@@ -23,7 +23,7 @@ $announce = content('announcement', []);
 <header class="top" id="top">
   <div class="wrap top__row">
     <a class="brand" href="<?= e($base) ?>#top" aria-label="<?= e($name) ?> home">
-      <?= logo_svg('olive-wordmark', 'brand__logo') ?>
+      <?= logo_svg('olive-logo', 'brand__logo') ?>
     </a>
     <nav class="nav" id="nav" aria-label="Main">
       <a href="<?= e($base) ?>#about">About</a>

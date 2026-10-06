@@ -30,7 +30,7 @@ $a = $b['address'] ?? [];
 $out[] = '- Based in: ' . implode(', ', array_unique(array_filter([$a['locality'] ?? '', 'Gandhidham', 'Kutch', 'Gujarat', 'India'])));
 $out[] = '- Address: ' . full_address();
 if ($areas) {
-    $out[] = '- Service areas: ' . implode(', ', $areas);
+    $out[] = '- Service areas: ' . implode(', ', $areas) . ', and across Kutch and Gujarat';
 }
 $out[] = '- Services: ' . implode('; ', array_map(fn ($f) => $f['heading'], content('features', [])));
 if (!empty($b['fssai'])) {

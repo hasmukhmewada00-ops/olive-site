@@ -122,14 +122,17 @@ if (is_staging() && PHP_SAPI !== 'cli' && !defined('OLIVE_SKIP_GATE')) {
 }
 
 // ---------------------------------------------------------------
-// Content (editable via the CMS later)
+// Content: base copy from content.sample.json (in git), with the
+// client's admin-panel edits from data/cms.json applied on top.
 // ---------------------------------------------------------------
+define('OLIVE_CMS_FILE', OLIVE_DATA . '/cms.json');
+
 function content(?string $key = null, mixed $default = null): mixed
 {
     static $data = null;
     if ($data === null) {
-        $file = is_file(OLIVE_DATA . '/content.json') ? OLIVE_DATA . '/content.json' : OLIVE_ROOT . '/content.sample.json';
-        $data = json_decode((string) file_get_contents($file), true) ?: [];
+        $data = json_decode((string) file_get_contents(OLIVE_ROOT . '/content.sample.json'), true) ?: [];
+        $data = cms_apply($data, cms_overrides());
     }
     if ($key === null) {
         return $data;
@@ -142,6 +145,69 @@ function content(?string $key = null, mixed $default = null): mixed
         $value = $value[$part];
     }
     return $value;
+}
+
+/** The client's saved edits (data/cms.json), or [] if none yet. */
+function cms_overrides(): array
+{
+    if (!is_file(OLIVE_CMS_FILE)) {
+        return [];
+    }
+    $ov = json_decode((string) file_get_contents(OLIVE_CMS_FILE), true);
+    return is_array($ov) ? $ov : [];
+}
+
+/**
+ * Apply admin edits to the base content. Only the editable slots are
+ * touched; headings, SEO copy, FAQ and layout always come from code.
+ */
+function cms_apply(array $d, array $ov): array
+{
+    if (isset($ov['business']) && is_array($ov['business'])) {
+        $d['business'] = array_replace_recursive($d['business'] ?? [], $ov['business']);
+    }
+    foreach (['announcement', 'popup'] as $k) {
+        if (isset($ov[$k]) && is_array($ov[$k])) {
+            $d[$k] = array_replace($d[$k] ?? [], $ov[$k]);
+        }
+    }
+    foreach (['trust', 'associations', 'testimonials', 'gallery'] as $k) {
+        if (isset($ov[$k]) && is_array($ov[$k])) {
+            $d[$k] = array_values($ov[$k]);
+        }
+    }
+    if (isset($ov['areas']['list']) && is_array($ov['areas']['list'])) {
+        $d['areas']['list'] = array_map(fn ($n) => ['name' => (string) $n], $ov['areas']['list']);
+    }
+    if (isset($ov['areas']['region'])) {
+        $d['areas']['region'] = (string) $ov['areas']['region'];
+    }
+    if (isset($ov['dishes']) && is_array($ov['dishes'])) {
+        $d['signature_dishes'] = array_map(fn ($n) => ['name' => (string) $n], $ov['dishes']);
+    }
+    if (isset($ov['footer_text'])) {
+        $d['footer']['text'] = (string) $ov['footer_text'];
+    }
+    foreach (($ov['images'] ?? []) as $slot => $img) {
+        if (!is_array($img) || empty($img['src'])) {
+            continue;
+        }
+        [$type, $ref] = array_pad(explode(':', (string) $slot, 2), 2, '');
+        if ($type === 'hero') {
+            $d['hero']['image'] = $img;
+        } elseif ($type === 'about') {
+            $d['about']['image'] = $img;
+        } elseif ($type === 'feature') {
+            foreach ($d['features'] ?? [] as $i => $f) {
+                if (($f['id'] ?? '') === $ref) {
+                    $d['features'][$i]['image'] = $img;
+                }
+            }
+        } elseif ($type === 'hygiene' && isset($d['hygiene']['steps'][(int) $ref])) {
+            $d['hygiene']['steps'][(int) $ref]['image'] = $img;
+        }
+    }
+    return $d;
 }
 
 // ---------------------------------------------------------------

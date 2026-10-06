@@ -16,7 +16,7 @@ $posts = blog_posts();
 
 $meta = [
     'title' => 'Catering Guides for Weddings & Events in Gandhidham | Olive Catering Company',
-    'desc' => 'Practical guides from Olive Catering Company on planning pure veg and Jain catering for weddings, corporate events and celebrations in Gandhidham and Kutch.',
+    'desc' => 'Practical guides from Olive Catering Company on planning pure veg and Jain catering for weddings, corporate events and celebrations in Gandhidham, Kutch and across Gujarat.',
     'canonical' => canonical_url('/blog/'),
     'schema' => json_encode([
         '@context' => 'https://schema.org',
@@ -49,7 +49,7 @@ require OLIVE_ROOT . '/partials/site-header.php';
       <header class="section__head">
         <p class="eyebrow">Olive journal</p>
         <h1 class="h2 blogindex__title">Catering guides for weddings and events in Gandhidham</h1>
-        <p class="lead">Practical advice on planning pure veg and Jain catering for weddings, corporate events and family celebrations across Kutch.</p>
+        <p class="lead">Practical advice on planning pure veg and Jain catering for weddings, corporate events and family celebrations in Gandhidham, Kutch and across Gujarat.</p>
       </header>
       <?php $cards = $posts; require OLIVE_ROOT . '/partials/blog-cards.php'; ?>
     </div>

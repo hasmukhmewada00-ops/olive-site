@@ -15,7 +15,8 @@ $base = $base ?? '';
       <?php if (!empty($b['instagram'])): ?><a href="https://www.instagram.com/<?= e($b['instagram']) ?>/" target="_blank" rel="noopener">Instagram</a><?php endif; ?>
       <?php if (!empty($b['fssai'])): ?><p>FSSAI Lic. No. <?= e($b['fssai']) ?></p><?php endif; ?>
       <?php $servedNames = array_map(fn ($x) => $x['name'], array_filter(content('areas.list', []), 'visible')); ?>
-      <?php if ($servedNames): ?><p>Serving <?= e(implode(', ', $servedNames)) ?></p><?php endif; ?>
+      <?php $region = (string) content('areas.region', ''); ?>
+      <?php if ($servedNames): ?><p>Serving <?= e(implode(', ', $servedNames)) ?><?= $region !== '' ? ' and ' . e(lcfirst($region)) : '' ?></p><?php endif; ?>
     </div>
   </div>
   <div class="wrap foot__base">

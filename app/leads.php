@@ -18,7 +18,6 @@ const OLIVE_EVENT_TYPES = [
     'Corporate event',
     'Birthday / Social gathering',
     'Festival / Religious function',
-    'Canteen / Institutional',
     'Other',
 ];
 

@@ -112,7 +112,7 @@ function schema_json(): string
         '@id' => canonical_url('/#business'),
         'name' => $name,
         'description' => (string) content('seo.description', ''),
-        'slogan' => 'Pure Veg & Jain Catering in Gandhidham',
+        'slogan' => 'Pure Veg & Jain Catering in Gandhidham, Kutch and across Gujarat',
         'url' => canonical_url('/'),
         'image' => array_values(array_filter([
             canonical_url('/assets/img/og-image.jpg'),
@@ -131,7 +131,10 @@ function schema_json(): string
             'postalCode' => $a['postal_code'] ?? '',
             'addressCountry' => $a['country'] ?? 'IN',
         ],
-        'areaServed' => array_map(fn ($c) => ['@type' => 'City', 'name' => $c . ', Gujarat'], service_areas()),
+        'areaServed' => array_merge(
+            array_map(fn ($c) => ['@type' => 'City', 'name' => $c . ', Gujarat'], service_areas()),
+            [['@type' => 'AdministrativeArea', 'name' => 'Kutch district, Gujarat'], ['@type' => 'State', 'name' => 'Gujarat']]
+        ),
         'hasOfferCatalog' => ['@type' => 'OfferCatalog', 'name' => 'Catering services', 'itemListElement' => $services],
         'sameAs' => array_values(array_filter([
             !empty($b['instagram']) ? 'https://www.instagram.com/' . $b['instagram'] . '/' : null,
