@@ -150,7 +150,7 @@ require OLIVE_ROOT . '/partials/site-head.php';
         </ul>
         <?php if ($dishes): ?>
           <div class="menucard__dishes">
-            <p class="menucard__label">Signature dishes</p>
+            <p class="menucard__label"><?= e(content('menu_dishes_label', 'Signature dishes')) ?></p>
             <p><?php foreach ($dishes as $i => $d): ?><?= $i ? ' &middot; ' : '' ?><?= e($d['name']) ?><?= tbc($d) ?><?php endforeach; ?></p>
           </div>
         <?php endif; ?>
@@ -221,8 +221,8 @@ require OLIVE_ROOT . '/partials/site-head.php';
   <section class="section words">
     <div class="wrap">
       <header class="section__head">
-        <p class="eyebrow">Kind words</p>
-        <h2 class="h2">What our clients say</h2>
+        <p class="eyebrow"><?= $testimonials ? 'Kind words' : 'Associations' ?></p>
+        <h2 class="h2"><?= $testimonials ? 'What our clients say' : 'Hotels and partners we work with' ?></h2>
       </header>
       <?php if ($testimonials): ?>
         <ul class="quotes">
@@ -234,14 +234,18 @@ require OLIVE_ROOT . '/partials/site-head.php';
           <?php endforeach; ?>
         </ul>
       <?php endif; ?>
-      <?php if ($associations): ?>
+      <?php if ($associations): $assocGroups = ['current' => 'Current Association', 'previous' => 'Previous Associations']; ?>
         <div class="assoc">
-          <p class="menucard__label">Trusted by</p>
-          <ul>
-            <?php foreach ($associations as $as): ?>
-              <li><?= e($as['name']) ?><?php if (!empty($as['note'])): ?><span><?= e($as['note']) ?></span><?php endif; ?><?= tbc($as) ?></li>
-            <?php endforeach; ?>
-          </ul>
+          <?php foreach ($assocGroups as $gKey => $gLabel): $gItems = array_values(array_filter($associations, fn ($a) => ($a['status'] ?? 'current') === $gKey)); if (!$gItems): continue; endif; ?>
+            <div class="assoc__group">
+              <p class="menucard__label"><?= e(count($gItems) === 1 ? rtrim($gLabel, 's') : $gLabel) ?></p>
+              <ul>
+                <?php foreach ($gItems as $as): ?>
+                  <li><?= e($as['name']) ?><?php if (!empty($as['note'])): ?><span><?= e($as['note']) ?></span><?php endif; ?><?= tbc($as) ?></li>
+                <?php endforeach; ?>
+              </ul>
+            </div>
+          <?php endforeach; ?>
         </div>
       <?php endif; ?>
     </div>
@@ -260,6 +264,7 @@ require OLIVE_ROOT . '/partials/site-head.php';
       </header>
       <ul class="areas__list">
         <?php foreach ($areas as $ar): ?><li><?= e($ar['name']) ?><?= tbc($ar) ?></li><?php endforeach; ?>
+        <?php if (content('areas.region', '') !== ''): ?><li class="areas__region"><?= e(content('areas.region')) ?></li><?php endif; ?>
       </ul>
     </div>
   </section>

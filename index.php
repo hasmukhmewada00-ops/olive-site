@@ -24,9 +24,9 @@ $name = (string) ($b['name'] ?? 'Olive Catering Company');
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <?php require __DIR__ . '/partials/gtm-head.php'; ?>
-<title><?= e($name) ?> | Pure Veg &amp; Jain Caterers, Kutch</title>
+<title><?= e($name) ?> | Pure Veg &amp; Jain Caterers in Gandhidham, Kutch</title>
 <meta name="robots" content="noindex, follow">
-<meta name="description" content="<?= e($name) ?>: pure veg and Jain catering for weddings, corporate events and celebrations across Gandhidham, Adipur and Kutch. New website coming soon.">
+<meta name="description" content="<?= e($name) ?>: Pure Veg &amp; Jain catering for weddings, corporate events and celebrations in Gandhidham, Kutch and across Gujarat. New website coming soon.">
 <link rel="canonical" href="<?= e(canonical_url('/')) ?>">
 <meta name="theme-color" content="#3A4733">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,7 +63,7 @@ $name = (string) ($b['name'] ?? 'Olive Catering Company');
       </p>
     <?php endif; ?>
 
-    <p class="hold__place">Gandhidham &middot; Adipur &middot; Kutch, Gujarat</p>
+    <p class="hold__place">Gandhidham &middot; Kutch &middot; Across Gujarat</p>
   </div>
 </main>
 <script src="<?= e(asset('assets/js/attribution.js')) ?>" defer></script>

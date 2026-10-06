@@ -7,8 +7,11 @@ require_once OLIVE_ROOT . '/app/blog.php';
 
 header('Content-Type: application/xml; charset=utf-8');
 
-$contentFile = is_file(OLIVE_DATA . '/content.json') ? OLIVE_DATA . '/content.json' : OLIVE_ROOT . '/content.sample.json';
-$homeMod = date('Y-m-d', max((int) filemtime($contentFile), (int) filemtime(OLIVE_ROOT . '/app/templates/home.php')));
+$homeMod = date('Y-m-d', max(
+    (int) filemtime(OLIVE_ROOT . '/content.sample.json'),
+    is_file(OLIVE_CMS_FILE) ? (int) filemtime(OLIVE_CMS_FILE) : 0,
+    (int) filemtime(OLIVE_ROOT . '/app/templates/home.php')
+));
 
 $urls = [['loc' => canonical_url('/'), 'lastmod' => $homeMod]];
 if (blog_enabled()) {

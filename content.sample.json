@@ -1,5 +1,5 @@
 {
-  "_note": "Seed content from the client portfolio (Sep 2026). Copied to data/content.json on first install; after that the CMS edits data/content.json only. Items with \"confirmed\": false show on staging only (with a 'to confirm' tag) and are hidden on the live site until the client confirms them.",
+  "_note": "Base content, maintained in code by One Man Marketing. The admin panel (/admin/) saves client edits to data/cms.json on the server, which is applied on top of this file. Items with \"confirmed\": false show on staging only (with a 'to confirm' tag) and are hidden on the live site.",
   "business": {
     "name": "Olive Catering Company",
     "tagline": "Catering Company",
@@ -28,14 +28,14 @@
     "text": ""
   },
   "holding": {
-    "headline": "Pure veg and Jain catering for weddings, corporate events and celebrations across Kutch.",
+    "headline": "Pure Veg & Jain catering for weddings, corporate events and celebrations in Gandhidham, Kutch and across Gujarat.",
     "subline": "Our new website is on its way. Until then, reach us directly.",
     "whatsapp_message": "Hi Olive, I'd like to enquire about catering for my event. (via website)"
   },
   "hero": {
-    "eyebrow": "Pure veg & Jain · Since 2023",
+    "eyebrow": "Pure Veg & Jain · Since 2023",
     "headline": "Pure Veg & Jain Catering Services in Gandhidham",
-    "subline": "Olive Catering Company brings thoughtfully planned Pure Veg and Jain catering to weddings, family celebrations, corporate events and special occasions across Gandhidham and Kutch.",
+    "subline": "Olive Catering Company brings thoughtfully planned Pure Veg and Jain catering, with modern crockery and 5‑star presentation, to weddings, family celebrations, corporate events and special occasions in Gandhidham, Kutch and across Gujarat.",
     "image": {
       "src": "/assets/img/photos/pure-veg-wedding-buffet-brass-chafing-dishes-gandhidham-960.webp",
       "alt": "Pure veg wedding buffet with brass chafing dishes and marigold garlands",
@@ -47,33 +47,26 @@
   "trust": [
     {
       "value": "2023",
-      "label": "Serving Kutch since"
+      "label": "Serving since"
     },
     {
       "value": "100%",
-      "label": "Pure veg & Jain"
+      "label": "Pure Veg & Jain"
     },
     {
-      "value": "500+",
-      "label": "Events catered",
-      "confirmed": false
+      "value": "5‑Star",
+      "label": "Hotel-style service"
     },
     {
-      "value": "25,000+",
-      "label": "Guests served",
-      "confirmed": false
-    },
-    {
-      "value": "30+",
-      "label": "Major weddings",
-      "confirmed": false
+      "value": "Gujarat",
+      "label": "Gandhidham, Kutch & beyond"
     }
   ],
   "about": {
     "heading": "A Trusted Catering Company in Gandhidham",
     "body": [
-      "Olive Catering Company started in 2023 in Kutch with a simple idea: vegetarian food that tastes like home, presented the way a special day deserves.",
-      "Our chefs cook traditional recipes with modern presentation, and our trained hospitality staff and supervisors look after every counter and every guest, from intimate family functions to large weddings."
+      "Olive Catering Company started in 2023 in Gandhidham, Kutch, with a simple idea: vegetarian food that tastes like home, presented the way a special day deserves.",
+      "Our chefs cook traditional recipes with modern presentation, served in modern crockery and covered serving dishes. Our trained hospitality staff and supervisors look after every counter and every guest, from intimate family functions to large weddings."
     ],
     "image": {
       "src": "/assets/img/photos/chef-plating-vegetarian-thali-olive-kitchen-960.webp",
@@ -85,34 +78,34 @@
   },
   "services": [
     {
-      "title": "Weddings",
+      "title": "Wedding Catering",
       "local": {
         "gu": "લગ્ન પ્રસંગ",
         "tr": "Lagan Prasang"
       },
-      "text": "Complete wedding catering with buffet setups, live counters and trained staff for every function.",
+      "text": "Complete Wedding Catering with buffet setups, Live Counters, modern crockery and trained staff for every function.",
       "link": "#weddings"
     },
     {
-      "title": "NRI & destination weddings",
+      "title": "NRI & Destination Weddings",
       "local": {
         "gu": "વતનમાં લગ્ન",
         "tr": "Vatan ma Lagan"
       },
-      "text": "For families coming home to Kutch for a wedding, with menus and arrangements planned before you arrive.",
+      "text": "For families coming home to Kutch and Gujarat for a wedding, with menus and arrangements planned before you arrive.",
       "link": "#weddings"
     },
     {
-      "title": "Corporate events",
+      "title": "Corporate Catering",
       "local": {
         "gu": "કંપનીના પ્રસંગ",
         "tr": "Company na Prasang"
       },
-      "text": "Lunches, meetings, launches and staff events for businesses in Gandhidham.",
+      "text": "Lunches, meetings, conferences, launches and staff events for businesses in Gandhidham and across Gujarat.",
       "link": "#corporate"
     },
     {
-      "title": "Birthdays & social gatherings",
+      "title": "Birthdays & Social Gatherings",
       "local": {
         "gu": "પારિવારિક પ્રસંગ",
         "tr": "Parivarik Prasang"
@@ -121,51 +114,59 @@
       "link": "#social"
     },
     {
-      "title": "Festival & religious functions",
+      "title": "Festival & Religious Functions",
       "local": {
         "gu": "જમણવાર અને ધાર્મિક પ્રસંગ",
         "tr": "Jamanvar & Dharmik Prasang"
       },
-      "text": "Vegetarian and Jain menus for pujas, festivals, Navratri and community jamanvar.",
+      "text": "Pure Veg and Jain menus for pujas, festivals, Navratri and community jamanvar.",
       "link": "#social"
     },
     {
-      "title": "School, college & industrial canteens",
+      "title": "Live Counters & Themed Menus",
       "local": {
-        "gu": "રોજનું ભોજન",
-        "tr": "Roj nu Bhojan"
+        "gu": "લાઇવ કાઉન્ટર",
+        "tr": "Live Counter"
       },
-      "text": "Daily meal service for institutions and industrial units.",
-      "link": "#corporate",
-      "confirmed": false
+      "text": "Rumali roti, pani puri, pizza and more, made fresh in front of your guests.",
+      "link": "#menu"
     }
   ],
   "specialties": [
     {
-      "title": "Pure veg & Jain menus",
-      "text": "Every menu is vegetarian. Jain preparations without onion, garlic or root vegetables on request."
+      "title": "Pure Veg & Jain Menus",
+      "text": "Every menu is pure vegetarian. Jain preparations, without onion, garlic or root vegetables, are available on request."
     },
     {
-      "title": "Multi-cuisine",
+      "title": "Multi-Cuisine",
       "text": "Multi-cuisine menus, so every guest finds something they love."
     },
     {
-      "title": "Live counters",
-      "text": "Food made fresh in front of your guests, hot and on time."
+      "title": "Live Counters",
+      "text": "Rumali roti, pani puri, pizza and more, made fresh in front of your guests."
     },
     {
-      "title": "Themed menus & custom buffets",
+      "title": "Modern Crockery & Covered Serving",
+      "text": "Modern crockery and closed serving dishes, presented to 5‑star standards."
+    },
+    {
+      "title": "Themed Menus & Custom Buffets",
       "text": "Menus and buffet layouts designed around your event, theme and guest count."
     },
     {
-      "title": "Eco-friendly serving",
-      "text": "Sustainable serveware available on request."
+      "title": "Eco-Friendly Serving",
+      "text": "Sustainable, eco-friendly serveware available on request."
     }
   ],
   "signature_dishes": [
     {
-      "name": "Signature dishes to be added",
-      "confirmed": false
+      "name": "Rumali Roti"
+    },
+    {
+      "name": "Pani Puri"
+    },
+    {
+      "name": "Pizza"
     }
   ],
   "hygiene": {
@@ -250,10 +251,19 @@
   ],
   "associations": [
     {
-      "name": "Holiday Village Resort",
-      "note": "Food & beverage partner",
-      "logo": "",
-      "confirmed": false
+      "name": "Radisson Resort and Spa, Kandla",
+      "status": "current",
+      "note": ""
+    },
+    {
+      "name": "Holiday Village Resort and Spa",
+      "status": "previous",
+      "note": ""
+    },
+    {
+      "name": "The Fern Royal Farm Resort, Anjar",
+      "status": "previous",
+      "note": ""
     }
   ],
   "testimonials": [
@@ -279,7 +289,7 @@
   "faq": [
     {
       "q": "Does Olive Catering Company provide pure veg catering?",
-      "a": "Yes. Everything Olive Catering Company cooks is pure vegetarian. Pure veg is at the heart of every menu we serve, for weddings, corporate events and family celebrations.",
+      "a": "Yes. Everything Olive Catering Company cooks is pure vegetarian. Pure Veg is at the heart of every menu we serve, for weddings, corporate events and family celebrations.",
       "confirmed": true
     },
     {
@@ -293,14 +303,14 @@
       "confirmed": true
     },
     {
-      "q": "Does Olive provide corporate catering in Gandhidham?",
-      "a": "Yes. Olive Catering Company caters corporate lunches, meetings, launches and staff events in Gandhidham, with pure veg menus and Jain options.",
+      "q": "Does Olive provide corporate catering in Gandhidham and across Gujarat?",
+      "a": "Yes. Olive Catering Company caters corporate lunches, meetings, conferences, launches and staff events in Gandhidham and across Gujarat, with Pure Veg menus and Jain options.",
       "confirmed": true
     },
     {
       "q": "Where does Olive Catering Company provide catering services?",
-      "a": "Olive Catering Company is based in Gandhidham and caters events in Gandhidham, Adipur and nearby towns in Kutch, including Anjar, Bhuj, Mundra and Kandla.",
-      "confirmed": false
+      "a": "Olive Catering Company is based in Gandhidham, Kutch, and caters events across Kutch and Gujarat, including Gandhidham, Anjar, Bhuj, Mundra and Kandla.",
+      "confirmed": true
     },
     {
       "q": "Can Olive customise a wedding catering menu?",
@@ -324,7 +334,7 @@
     }
   ],
   "footer": {
-    "text": "Pure veg and Jain catering for weddings, corporate events and celebrations across Kutch.",
+    "text": "Pure Veg & Jain catering for weddings, corporate events and celebrations in Gandhidham, Kutch and across Gujarat.",
     "credit": false
   },
   "popup": {
@@ -335,10 +345,10 @@
   },
   "_images_note": "Images marked ai_placeholder are AI-generated mood images. Replace the kitchen, staff and gallery ones with the client's real photos before launch.",
   "seo": {
-    "title": "Olive Catering Company | Pure Veg & Jain Caterers in Gandhidham",
-    "description": "Olive Catering Company offers Pure Veg & Jain catering for weddings, corporate events and celebrations in Gandhidham, Adipur and Kutch."
+    "title": "Olive Catering Company | Pure Veg & Jain Caterers in Gandhidham, Kutch",
+    "description": "Olive Catering Company offers Pure Veg & Jain catering for weddings, corporate events and celebrations in Gandhidham, Kutch and across Gujarat."
   },
-  "services_heading": "Catering Services in Gandhidham",
+  "services_heading": "Catering Services in Gandhidham & Across Gujarat",
   "features": [
     {
       "id": "pure-veg-jain",
@@ -349,7 +359,7 @@
       },
       "heading": "Pure Veg & Jain Catering in Gandhidham",
       "body": [
-        "Everything Olive Catering Company cooks is pure vegetarian. Pure veg is not one option on our menu; it is the whole kitchen.",
+        "Everything Olive Catering Company cooks is pure vegetarian. Pure Veg is not one option on our menu; it is the whole kitchen.",
         "For Jain families and guests, we prepare Jain menus without onion, garlic or root vegetables, so everyone at your event can eat with confidence."
       ],
       "points": [
@@ -375,7 +385,7 @@
       },
       "heading": "Wedding Caterers in Gandhidham for Memorable Celebrations",
       "body": [
-        "A wedding is several meals across several days, each with its own mood. Olive Catering Company caters wedding functions in Gandhidham with buffet setups, live counters and trained hospitality staff and supervisors, so your family can be with your guests instead of the kitchen."
+        "A wedding is several meals across several days, each with its own mood. Olive Catering Company caters wedding functions in Gandhidham and across Gujarat with buffet setups, Live Counters, modern crockery and trained hospitality staff and supervisors, so your family can be with your guests instead of the kitchen."
       ],
       "sub": {
         "heading": "Destination & NRI Wedding Catering in Kutch",
@@ -393,15 +403,10 @@
     {
       "id": "corporate",
       "eyebrow": "Corporate",
-      "heading": "Corporate Catering in Gandhidham, Kandla & Mundra",
+      "heading": "Corporate Catering in Gandhidham & Across Gujarat",
       "body": [
-        "Olive Catering Company caters corporate lunches, meetings, launches and staff events, with pure veg menus that work for mixed teams and Jain options for those who need them."
+        "Olive Catering Company caters corporate lunches, meetings, conferences, launches and staff events in Gandhidham, Kandla, Mundra and across Gujarat, with Pure Veg menus that work for mixed teams and Jain options for those who need them."
       ],
-      "sub": {
-        "heading": "Industrial & Institutional Catering",
-        "text": "Daily meal service for school, college and industrial canteens.",
-        "confirmed": false
-      },
       "image": {
         "src": "/assets/img/photos/olive-corporate-lunch-catering-gandhidham-960.webp",
         "alt": "Corporate lunch buffet with chafing dishes, salads and rotis in an office",
@@ -420,7 +425,7 @@
       },
       "heading": "Catering for Family & Social Events",
       "body": [
-        "Birthdays, anniversaries, pujas, festivals and community functions: Olive Catering Company brings the same care to a family gathering as to a wedding, with live counters and themed menus when you want something special."
+        "Birthdays, anniversaries, pujas, festivals and community functions: Olive Catering Company brings the same care to a family gathering as to a wedding, with Live Counters such as rumali roti, pani puri and pizza, and themed menus when you want something special."
       ],
       "image": {
         "src": "/assets/img/photos/olive-live-dosa-counter-event-gandhidham-960.webp",
@@ -433,31 +438,26 @@
   ],
   "menu_heading": "Thoughtfully Planned Catering Menus",
   "areas": {
-    "heading": "Catering Services Across Gandhidham & Kutch",
-    "intro": "Olive Catering Company is based at Radisson Resort and Spa on Airport Road, Gandhidham, and caters weddings, corporate events and celebrations across Gandhidham, Adipur and Kutch.",
+    "heading": "Catering Services in Gandhidham, Kutch & Across Gujarat",
+    "intro": "Olive Catering Company is based at Radisson Resort and Spa on Airport Road, Gandhidham. We cater weddings, corporate events and celebrations in Gandhidham, across Kutch and across Gujarat.",
     "list": [
       {
         "name": "Gandhidham"
       },
       {
-        "name": "Adipur"
+        "name": "Anjar"
       },
       {
-        "name": "Anjar",
-        "confirmed": false
+        "name": "Bhuj"
       },
       {
-        "name": "Bhuj",
-        "confirmed": false
+        "name": "Mundra"
       },
       {
-        "name": "Mundra",
-        "confirmed": false
-      },
-      {
-        "name": "Kandla",
-        "confirmed": false
+        "name": "Kandla"
       }
-    ]
-  }
+    ],
+    "region": "Across Gujarat"
+  },
+  "menu_dishes_label": "Live counter favourites"
 }
