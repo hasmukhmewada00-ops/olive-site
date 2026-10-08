@@ -278,6 +278,21 @@ function alt_error(string $alt): string
  * and 1600 px wide in /uploads, named from the alt text.
  * Returns the image record for content, or throws with a plain message.
  */
+/** Resize with imagecopyresampled (more reliable across servers than imagescale). */
+function cms_resize(GdImage $src, int $tw, int $th): ?GdImage
+{
+    $dst = @imagecreatetruecolor($tw, $th);
+    if (!$dst) {
+        return null;
+    }
+    imagealphablending($dst, true);
+    if (!@imagecopyresampled($dst, $src, 0, 0, 0, 0, $tw, $th, imagesx($src), imagesy($src))) {
+        imagedestroy($dst);
+        return null;
+    }
+    return $dst;
+}
+
 /** Effective upload limit in bytes: our cap, or the server's if lower. */
 function cms_upload_limit(): int
 {
@@ -347,6 +362,19 @@ function cms_process_image(array $file, string $alt, bool $hero = false): array
         throw new RuntimeException('That photo could not be read. Try saving it again as JPG.');
     }
 
+    // Shrink huge phone photos straight away: later steps then need far less memory.
+    $longSide = max(imagesx($src), imagesy($src));
+    if ($longSide > 2400) {
+        $ratio = 2400 / $longSide;
+        $small = cms_resize($src, max(1, (int) round(imagesx($src) * $ratio)), max(1, (int) round(imagesy($src) * $ratio)));
+        if (!$small) {
+            imagedestroy($src);
+            throw new RuntimeException('This server ran out of memory processing the photo. Try a smaller photo (under 4 MB), or resize it to 2000 px wide first.');
+        }
+        imagedestroy($src);
+        $src = $small;
+    }
+
     // Phone photos store rotation in EXIF; apply it so the photo is upright.
     if ($mime === 'image/jpeg' && function_exists('exif_read_data')) {
         $exif = @exif_read_data($tmp);
@@ -376,9 +404,9 @@ function cms_process_image(array $file, string $alt, bool $hero = false): array
         foreach (CMS_SIZES as $target) {
             $tw = min($target, $w);
             $th = (int) round($h * $tw / $w);
-            $img = $tw === $w ? $src : imagescale($src, $tw, $th, IMG_BICUBIC);
+            $img = $tw === $w ? $src : cms_resize($src, $tw, $th);
             if (!$img) {
-                throw new RuntimeException('Resizing failed.');
+                throw new RuntimeException('Resizing failed: the server ran out of memory. Try a smaller photo (under 4 MB) or resize it to 2000 px wide first.');
             }
             imagealphablending($img, false);
             imagesavealpha($img, true);
