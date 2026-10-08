@@ -56,6 +56,7 @@ uploads/               NOT in git: client images (scripts cannot run here)
 - Edits are saved to `data/cms.json` and applied on top of `content.sample.json`, so code updates to copy still flow through.
 - Every save backs up the previous version (last 20 kept, one-click restore) and sends `X-LiteSpeed-Purge: *`.
 - Photos: JPG/PNG/WebP, real type checked, min 800 px, re-encoded through GD (strips EXIF and anything hidden), auto-rotated, saved as WebP at 480/960/1600 px under byte budgets (hero 1600 under 250 KB), named from the alt text. Alt text is mandatory (10 to 125 chars).
+- Articles (`/admin/articles.php`): write, tag, save as draft, preview, publish, unpublish and delete articles; change the cover photo of the built-in guides. Client articles live in `data/articles.json` (markdown-lite body, escaped on output). Publishing needs title, 70-160 char description, 300+ words, cover photo with alt text and a tag. Cover photos also get a 1200x630 share image. Tag pages at `/blog/tag/{tag}/` are noindex,follow. Drafts are hidden from the blog and sitemap (preview via a signed link).
 - Staging and live each have their own admin and their own `data/` and `uploads/`.
 
 `config.php`, `data/` and `uploads/` are never touched by a deploy.

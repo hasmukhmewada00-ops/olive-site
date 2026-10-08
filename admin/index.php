@@ -58,12 +58,13 @@ function thumb_img(array $img, string $label = ''): string
   <div class="bar__in">
     <span class="bar__logo"><?= logo_svg('olive-logo') ?></span>
     <span class="bar__site"><?= e($host) ?><?= is_staging() ? ' <em>staging</em>' : '' ?></span>
-    <nav class="bar__links"><a href="/" target="_blank" rel="noopener">View site</a><a href="/admin/logout.php">Log out</a></nav>
+    <nav class="bar__links"><a href="/admin/" aria-current="page">Site content</a><a href="/admin/articles.php">Articles</a><a href="/" target="_blank" rel="noopener">View site</a><a href="/admin/logout.php">Log out</a></nav>
   </div>
 </header>
 
 <div class="layout">
 <nav class="side" aria-label="Sections">
+  <a href="/admin/articles.php"><strong>Articles</strong></a>
   <a href="#contact">Contact details</a>
   <a href="#photos">Section photos</a>
   <a href="#gallery">Gallery</a>

@@ -38,6 +38,8 @@ ServerSignature Off
   # Blog: /blog/ and /blog/{slug}/ (trailing slash is canonical)
   RewriteRule ^blog$ /blog/ [R=301,L]
   RewriteRule ^blog/$ blog.php [L,QSA]
+  RewriteRule ^blog/tag/([a-z0-9-]+)$ /blog/tag/$1/ [R=301,L]
+  RewriteRule ^blog/tag/([a-z0-9-]+)/$ blog.php?tag=$1 [L,QSA]
   RewriteRule ^blog/([a-z0-9-]+)$ /blog/$1/ [R=301,L]
   RewriteRule ^blog/([a-z0-9-]+)/$ post.php?slug=$1 [L,QSA]
 

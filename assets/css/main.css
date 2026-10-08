@@ -550,3 +550,12 @@ button { font: inherit; }
   .areas__list li { font-size: 19px; padding: 10px 16px; }
   .prose { font-size: 17px; }
 }
+
+/* ---------- blog: tags, lists, draft bar ---------- */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.tags a { display: inline-block; padding: 5px 14px; border: 1px solid rgba(197, 160, 89, .7); border-radius: 999px; font: 600 13px/1.4 var(--sans); color: var(--olive-deep); text-decoration: none; background: #fff; }
+.tags a:hover, .tags a[aria-current="page"] { background: var(--olive); color: var(--cream); border-color: var(--olive); }
+.tags--filter { margin: 0 0 32px; }
+.prose h3 { font: 500 clamp(22px, 2.6vw, 27px)/1.25 var(--serif); color: var(--olive-deep); margin-top: 32px; }
+.prose ol { padding-left: 24px; display: grid; gap: 10px; }
+.draftbar { margin: 0 0 24px; padding: 12px 16px; border-radius: 10px; background: #FFF8E6; border: 1px solid #EAD9A6; font-weight: 600; }

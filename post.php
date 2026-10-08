@@ -11,7 +11,7 @@ if (!blog_enabled()) {
 }
 
 $slug = preg_replace('/[^a-z0-9-]/', '', strtolower((string) ($_GET['slug'] ?? '')));
-$post = $slug !== '' ? blog_post($slug) : null;
+$post = $slug !== '' ? blog_post($slug, (string) ($_GET['preview'] ?? '')) : null;
 if (!$post) {
     http_response_code(404);
     require __DIR__ . '/404.php';
@@ -20,15 +20,18 @@ if (!$post) {
 
 $page_type = 'blog_post';
 $base = '/';
-$related = array_values(array_filter(blog_posts(), fn ($p) => $p['slug'] !== $post['slug']));
+$related = blog_related($post, 3);
+$isDraft = ($post['draft'] ?? false) === true;
+$tags = blog_post_tags($post);
 $waBlog = 'Hi Olive, I read your article "' . $post['title'] . '" and would like a catering quote. (via website)';
 
 $meta = [
-    'title' => $post['seo_title'] ?? ($post['title'] . ' | Olive Catering Company'),
+    'title' => ($post['seo_title'] ?? '') !== '' ? $post['seo_title'] : ($post['title'] . ' | Olive Catering Company'),
     'desc' => $post['description'],
     'canonical' => blog_url($post, true),
     'og_type' => 'article',
-    'og_image' => canonical_url('/assets/img/og/' . $post['slug'] . '.jpg'),
+    'og_image' => blog_og_image($post),
+    'robots' => $isDraft ? 'noindex, nofollow' : '',
     'schema' => blog_schema($post),
 ];
 require OLIVE_ROOT . '/partials/site-head.php';
@@ -42,7 +45,9 @@ require OLIVE_ROOT . '/partials/site-header.php';
         <p class="eyebrow"><?= e($post['eyebrow'] ?? 'Planning guide') ?></p>
         <h1 class="post__title"><?= e($post['title']) ?></h1>
         <p class="post__meta">By Olive Catering Company &middot; <time datetime="<?= e($post['date']) ?>"><?= e(blog_date((string) $post['date'])) ?></time> &middot; <?= blog_read_minutes($post) ?> min read</p>
+        <?php if ($tags): ?><ul class="tags" aria-label="Tags"><?php foreach ($tags as $ts => $tl): ?><li><a href="<?= e(blog_tag_url($ts)) ?>"><?= e($tl) ?></a></li><?php endforeach; ?></ul><?php endif; ?>
       </header>
+      <?php if ($isDraft): ?><p class="draftbar">Draft preview. This article is not public yet and is hidden from Google.</p><?php endif; ?>
       <figure class="post__hero">
         <img src="<?= e(blog_img($post, 1600)) ?>" srcset="<?= e(blog_img($post, 960)) ?> 960w, <?= e(blog_img($post, 1600)) ?> 1600w" sizes="(min-width: 900px) 860px, 94vw" width="1600" height="1200" alt="<?= e($post['image_alt'] ?? '') ?>" fetchpriority="high">
       </figure>

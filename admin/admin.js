@@ -3,7 +3,7 @@
   'use strict';
 
   // Show the chosen photo's size; warn early when it is too big.
-  document.querySelectorAll('[data-upload] input[type=file]').forEach(function (input) {
+  document.querySelectorAll('[data-upload] input[type=file], form [type=file]').forEach(function (input) {
     input.addEventListener('change', function () {
       var info = input.closest('form').querySelector('.file__info');
       var f = input.files && input.files[0];

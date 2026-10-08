@@ -316,7 +316,7 @@ function cms_limit_mb(): string
     return (string) floor(cms_upload_limit() / 1048576) . ' MB';
 }
 
-function cms_process_image(array $file, string $alt, bool $hero = false): array
+function cms_process_image(array $file, string $alt, bool $hero = false, bool $og = false): array
 {
     if (!extension_loaded('gd') || !function_exists('imagewebp')) {
         throw new RuntimeException('This server cannot process images (GD with WebP is missing). Contact One Man Marketing.');
@@ -431,6 +431,32 @@ function cms_process_image(array $file, string $alt, bool $hero = false): array
             $written[] = $path;
             $dims[$target] = [$tw, $th];
         }
+
+        // Share image for WhatsApp / Facebook / Google: 1200 x 630 JPG, centre-cropped.
+        $ogUrl = null;
+        if ($og) {
+            $ratio = 1200 / 630;
+            $sw = $w;
+            $sh = (int) round($w / $ratio);
+            if ($sh > $h) {
+                $sh = $h;
+                $sw = (int) round($h * $ratio);
+            }
+            $dst = imagecreatetruecolor(1200, 630);
+            if ($dst && imagecopyresampled($dst, $src, 0, 0, (int) (($w - $sw) / 2), (int) (($h - $sh) / 2), 1200, 630, $sw, $sh)) {
+                ob_start();
+                imagejpeg($dst, null, 82);
+                $jpg = (string) ob_get_clean();
+                $ogPath = $dir . '/' . $base . '-og.jpg';
+                if ($jpg !== '' && file_put_contents($ogPath, $jpg, LOCK_EX) !== false) {
+                    $written[] = $ogPath;
+                    $ogUrl = '/uploads/' . $base . '-og.jpg';
+                }
+            }
+            if ($dst) {
+                imagedestroy($dst);
+            }
+        }
     } catch (Throwable $t) {
         foreach ($written as $p) {
             @unlink($p);
@@ -440,12 +466,16 @@ function cms_process_image(array $file, string $alt, bool $hero = false): array
         imagedestroy($src);
     }
 
-    return [
+    $rec = [
         'src' => '/uploads/' . $base . '-960.webp',
         'alt' => $alt,
         'width' => $dims[1600][0],
         'height' => $dims[1600][1],
     ];
+    if (!empty($ogUrl)) {
+        $rec['og'] = $ogUrl;
+    }
+    return $rec;
 }
 
 /** Thumbnail URL for the admin list (the 480 copy when there is one). */
@@ -453,4 +483,50 @@ function thumb(array $img): string
 {
     $src = (string) ($img['src'] ?? '');
     return preg_replace('/-\d+\.webp$/', '-480.webp', $src) ?? $src;
+}
+
+// ---------------------------------------------------------------
+// Articles (data/articles.json)
+// ---------------------------------------------------------------
+/** Save the articles list with a backup of the previous version (last 20 kept). */
+function cms_articles_save(array $list): void
+{
+    $dir = cms_backup_dir();
+    if (!is_dir(OLIVE_DATA)) {
+        @mkdir(OLIVE_DATA, 0755, true);
+    }
+    if (!is_dir($dir)) {
+        @mkdir($dir, 0755, true);
+    }
+    if (is_file(OLIVE_ARTICLES_FILE)) {
+        @copy(OLIVE_ARTICLES_FILE, $dir . '/articles-' . date('Ymd-His') . '-' . bin2hex(random_bytes(2)) . '.json');
+        $old = glob($dir . '/articles-*.json') ?: [];
+        rsort($old);
+        foreach (array_slice($old, CMS_BACKUP_KEEP) as $f) {
+            @unlink($f);
+        }
+    }
+    $tmp = OLIVE_ARTICLES_FILE . '.tmp';
+    $json = json_encode(array_values($list), JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+    if ($json === false || file_put_contents($tmp, $json, LOCK_EX) === false || !rename($tmp, OLIVE_ARTICLES_FILE)) {
+        throw new RuntimeException('Could not save the article. Check that the data folder is writable.');
+    }
+    cms_purge_cache();
+}
+
+/** Slug rules for a new article: lowercase words and dashes, not reserved, not taken. */
+function article_slug_error(string $slug, ?string $ownSlug = null): string
+{
+    if (!preg_match('/^[a-z0-9]+(-[a-z0-9]+)*$/', $slug) || strlen($slug) > 70) {
+        return 'The web address (URL) can only have lowercase letters, numbers and dashes, up to 70 characters.';
+    }
+    if (in_array($slug, OLIVE_RESERVED_SLUGS, true)) {
+        return 'That web address is reserved. Please choose another.';
+    }
+    foreach (blog_posts(true) as $p) {
+        if ($p['slug'] === $slug && $slug !== $ownSlug) {
+            return 'Another article already uses that web address. Please change it a little.';
+        }
+    }
+    return '';
 }
