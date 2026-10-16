@@ -3,6 +3,10 @@ declare(strict_types=1);
 /** Saves one text group from the admin page. Photos are handled by image.php. */
 require __DIR__ . '/_init.php';
 admin_require();
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && empty($_POST) && (int) ($_SERVER['CONTENT_LENGTH'] ?? 0) > 0) {
+    flash('The files are too large for the server. Please use logos under ' . cms_limit_mb() . '.', 'bad');
+    back_to('associations');
+}
 csrf_check();
 
 $group = (string) ($_POST['group'] ?? '');
@@ -84,12 +88,47 @@ switch ($group) {
         break;
 
     case 'associations':
-        $list = $rows('assoc', ['name' => 80, 'note' => 60, 'status' => 10], 10);
-        foreach ($list as &$a) {
-            $a['status'] = $a['status'] === 'previous' ? 'previous' : 'current';
+        $list = [];
+        $files = $_FILES['assoc_logo'] ?? null;
+        foreach ((array) ($p['assoc'] ?? []) as $i => $r) {
+            if (!is_array($r)) {
+                continue;
+            }
+            $name = clean($r['name'] ?? '', 80);
+            if ($name === '') {
+                continue;
+            }
+            $row = [
+                'name' => $name,
+                'status' => ($r['status'] ?? '') === 'previous' ? 'previous' : 'current',
+                'note' => clean($r['note'] ?? '', 60),
+            ];
+            $logo = (string) ($r['logo'] ?? '');
+            if (!preg_match('~^/(uploads|assets/img/logos)/[a-z0-9-]+\.webp$~', $logo) || !empty($r['logo_remove'])) {
+                $logo = '';
+            }
+            $lw = (int) ($r['logo_w'] ?? 0);
+            $lh = (int) ($r['logo_h'] ?? 0);
+            $up = is_array($files) && isset($files['error'][$i]) && (int) $files['error'][$i] !== UPLOAD_ERR_NO_FILE;
+            if ($up) {
+                try {
+                    $one = ['name' => $files['name'][$i], 'tmp_name' => $files['tmp_name'][$i], 'error' => $files['error'][$i], 'size' => $files['size'][$i]];
+                    $img = cms_process_logo($one, $name);
+                    $logo = $img['src'];
+                    $lw = $img['w'];
+                    $lh = $img['h'];
+                } catch (RuntimeException $ex) {
+                    $errors[] = $name . ': ' . $ex->getMessage();
+                }
+            }
+            if ($logo !== '' && $lw > 0 && $lh > 0) {
+                $row['logo'] = $logo;
+                $row['logo_w'] = $lw;
+                $row['logo_h'] = $lh;
+            }
+            $list[] = $row;
         }
-        unset($a);
-        $ov['associations'] = array_values(array_filter($list, fn ($a) => $a['name'] !== ''));
+        $ov['associations'] = array_slice($list, 0, 10);
         break;
 
     case 'areas':

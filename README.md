@@ -51,7 +51,7 @@ uploads/               NOT in git: client images (scripts cannot run here)
 ## Admin panel (/admin/)
 
 - One login (`admin_user` / `admin_pass_hash` in config.php). 5 wrong tries = 15 min lockout. 30 min idle logout.
-- Editable: calling + WhatsApp numbers, email, Instagram, hours, FSSAI, address, map, GBP link; every section photo; gallery (add, describe, reorder, remove, max 30); associations (current / previous); highlights strip; service areas; live counter dishes; client reviews; announcement bar; pop-up; footer text.
+- Editable: calling + WhatsApp numbers, email, Instagram, hours, FSSAI, address, map, GBP link; every section photo; gallery (add, describe, reorder, remove, max 30); associations (current / previous, each with an optional logo: trimmed and saved as a small WebP); highlights strip; service areas; live counter dishes; client reviews; announcement bar; pop-up; footer text.
 - Not editable (protects SEO): headings, service and section copy, FAQ, title/meta, schema structure.
 - Edits are saved to `data/cms.json` and applied on top of `content.sample.json`, so code updates to copy still flow through.
 - Every save backs up the previous version (last 20 kept, one-click restore) and sends `X-LiteSpeed-Purge: *`.

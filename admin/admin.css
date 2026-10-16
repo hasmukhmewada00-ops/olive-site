@@ -129,3 +129,8 @@ textarea[name="body"] { font-family: ui-monospace, SFMono-Regular, Menlo, monosp
 .actions--sub { border-top: 1px solid var(--line); padding-top: 16px; }
 .actions--sub form { margin: 0; }
 @media (max-width: 860px) { .aitem { grid-template-columns: 1fr; } .aitem__img { width: 100%; height: 180px; } }
+
+.logorow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: -4px 0 14px; padding-bottom: 12px; border-bottom: 1px dashed var(--line); }
+.logorow label { margin: 0; }
+.logorow__img { display: inline-flex; align-items: center; padding: 6px 10px; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
+.logorow__img img { height: 48px; width: auto; display: block; }

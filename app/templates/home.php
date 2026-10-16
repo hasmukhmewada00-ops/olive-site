@@ -241,7 +241,9 @@ require OLIVE_ROOT . '/partials/site-head.php';
               <p class="menucard__label"><?= e(count($gItems) === 1 ? rtrim($gLabel, 's') : $gLabel) ?></p>
               <ul>
                 <?php foreach ($gItems as $as): ?>
-                  <li><?= e($as['name']) ?><?php if (!empty($as['note'])): ?><span><?= e($as['note']) ?></span><?php endif; ?><?= tbc($as) ?></li>
+                  <li<?= !empty($as['logo']) ? ' class="assoc__has-logo"' : '' ?>>
+                    <?php if (!empty($as['logo'])): ?><span class="assoc__logo"><img src="<?= e($as['logo']) ?>" alt="<?= e($as['name']) ?> logo" width="<?= (int) ($as['logo_w'] ?? 160) ?>" height="<?= (int) ($as['logo_h'] ?? 80) ?>" loading="lazy" decoding="async"></span><?php endif; ?>
+                    <span class="assoc__name"><?= e($as['name']) ?></span><?php if (!empty($as['note'])): ?><span><?= e($as['note']) ?></span><?php endif; ?><?= tbc($as) ?></li>
                 <?php endforeach; ?>
               </ul>
             </div>

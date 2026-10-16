@@ -158,8 +158,8 @@ function thumb_img(array $img, string $label = ''): string
   <!-- Associations -->
   <section class="card" id="associations">
     <h2>Associations</h2>
-    <p class="muted">Hotels and partners Olive works with, or has worked with. Leave a row blank to remove it.</p>
-    <form method="post" action="/admin/save.php">
+    <p class="muted">Hotels and partners Olive works with, or has worked with. Upload each hotel's logo (JPG, PNG or WebP, at least 120 px wide). Extra white space is trimmed automatically. Leave a name blank to remove the row.</p>
+    <form method="post" action="/admin/save.php" enctype="multipart/form-data" data-upload data-max="<?= cms_upload_limit() ?>">
       <?= csrf_field() ?><input type="hidden" name="group" value="associations">
       <?php for ($i = 0; $i < max(count($assoc) + 2, 4); $i++): $r = $assoc[$i] ?? []; ?>
         <div class="row3">
@@ -172,7 +172,21 @@ function thumb_img(array $img, string $label = ''): string
           </label>
           <label>Small note <span class="opt">optional</span><input name="assoc[<?= $i ?>][note]" value="<?= e($r['note'] ?? '') ?>" maxlength="60" placeholder="Food & beverage partner"></label>
         </div>
+        <div class="logorow">
+          <?php if (!empty($r['logo'])): ?>
+            <span class="logorow__img"><img src="<?= e($r['logo']) ?>" alt="<?= e(($r['name'] ?? '') . ' logo') ?>" height="48"></span>
+            <input type="hidden" name="assoc[<?= $i ?>][logo]" value="<?= e($r['logo']) ?>">
+            <input type="hidden" name="assoc[<?= $i ?>][logo_w]" value="<?= (int) ($r['logo_w'] ?? 0) ?>">
+            <input type="hidden" name="assoc[<?= $i ?>][logo_h]" value="<?= (int) ($r['logo_h'] ?? 0) ?>">
+          <?php endif; ?>
+          <label>Logo <span class="opt"><?= !empty($r['logo']) ? 'choose a file to replace it' : 'optional' ?></span>
+            <input type="file" name="assoc_logo[<?= $i ?>]" accept="image/jpeg,image/png,image/webp"></label>
+          <?php if (!empty($r['logo'])): ?>
+            <label class="check"><input type="checkbox" name="assoc[<?= $i ?>][logo_remove]" value="1"> Remove logo</label>
+          <?php endif; ?>
+        </div>
       <?php endfor; ?>
+      <p class="file__info" hidden></p>
       <button class="btn" type="submit">Save associations</button>
     </form>
   </section>

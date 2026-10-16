@@ -253,17 +253,26 @@
     {
       "name": "Radisson Resort and Spa, Kandla",
       "status": "current",
-      "note": ""
+      "note": "",
+      "logo": "/assets/img/logos/radisson-resort-and-spa-kandla.webp",
+      "logo_w": 311,
+      "logo_h": 129
     },
     {
       "name": "Holiday Village Resort and Spa",
       "status": "previous",
-      "note": ""
+      "note": "",
+      "logo": "/assets/img/logos/holiday-village-resort-and-spa.webp",
+      "logo_w": 160,
+      "logo_h": 160
     },
     {
       "name": "The Fern Royal Farm Resort, Anjar",
       "status": "previous",
-      "note": ""
+      "note": "",
+      "logo": "/assets/img/logos/the-fern-royal-farm-resort-anjar.webp",
+      "logo_w": 245,
+      "logo_h": 160
     }
   ],
   "testimonials": [

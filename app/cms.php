@@ -478,6 +478,109 @@ function cms_process_image(array $file, string $alt, bool $hero = false, bool $o
     return $rec;
 }
 
+/**
+ * Check, clean and shrink an uploaded hotel/partner logo. Whitespace around the logo is
+ * trimmed, then it is saved as one small WebP (max 160 px tall, 480 px wide) in /uploads.
+ * Returns ['src','w','h'] or throws with a plain message.
+ */
+function cms_process_logo(array $file, string $name): array
+{
+    if (!extension_loaded('gd') || !function_exists('imagewebp')) {
+        throw new RuntimeException('This server cannot process images (GD with WebP is missing). Contact One Man Marketing.');
+    }
+    $err = (int) ($file['error'] ?? UPLOAD_ERR_NO_FILE);
+    if ($err === UPLOAD_ERR_INI_SIZE || $err === UPLOAD_ERR_FORM_SIZE) {
+        throw new RuntimeException('That logo is too large. Please use one under ' . cms_limit_mb() . '.');
+    }
+    if ($err !== UPLOAD_ERR_OK || !is_uploaded_file((string) $file['tmp_name'])) {
+        throw new RuntimeException('The logo did not upload. Please try again.');
+    }
+    $tmp = (string) $file['tmp_name'];
+    if (filesize($tmp) > cms_upload_limit()) {
+        throw new RuntimeException('That logo is too large. Please use one under ' . cms_limit_mb() . '.');
+    }
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($tmp);
+    if (!in_array($mime, ['image/jpeg', 'image/png', 'image/webp'], true)) {
+        throw new RuntimeException('Please upload the logo as a JPG, PNG or WebP file.');
+    }
+    $info = @getimagesize($tmp);
+    if (!$info || $info[0] < 1 || $info[1] < 1 || $info[0] * $info[1] > CMS_MAX_PIXELS) {
+        throw new RuntimeException('That file is not a readable logo.');
+    }
+    if (max($info[0], $info[1]) < 120) {
+        throw new RuntimeException('That logo is too small (' . $info[0] . ' x ' . $info[1] . ' px). Please use one at least 120 px wide.');
+    }
+    @ini_set('memory_limit', '512M');
+    $src = match ($mime) {
+        'image/jpeg' => @imagecreatefromjpeg($tmp),
+        'image/png' => @imagecreatefrompng($tmp),
+        'image/webp' => @imagecreatefromwebp($tmp),
+    };
+    if (!$src) {
+        throw new RuntimeException('That logo could not be read. Try saving it again as PNG.');
+    }
+    imagepalettetotruecolor($src);
+
+    // Flatten transparency onto white (logos sit on a white tile on the site).
+    $w = imagesx($src);
+    $h = imagesy($src);
+    $flat = imagecreatetruecolor($w, $h);
+    imagefill($flat, 0, 0, imagecolorallocate($flat, 255, 255, 255));
+    imagealphablending($flat, true);
+    imagecopy($flat, $src, 0, 0, 0, 0, $w, $h);
+    imagedestroy($src);
+    $src = $flat;
+
+    // Trim the empty white border around the logo.
+    $crop = @imagecropauto($src, IMG_CROP_THRESHOLD, 0.06, imagecolorallocate($src, 255, 255, 255));
+    if ($crop) {
+        imagedestroy($src);
+        $src = $crop;
+        $w = imagesx($src);
+        $h = imagesy($src);
+    }
+    $pad = max(2, (int) round(max($w, $h) * 0.02));
+    $padded = imagecreatetruecolor($w + 2 * $pad, $h + 2 * $pad);
+    imagefill($padded, 0, 0, imagecolorallocate($padded, 255, 255, 255));
+    imagecopy($padded, $src, $pad, $pad, 0, 0, $w, $h);
+    imagedestroy($src);
+    $src = $padded;
+    $w = imagesx($src);
+    $h = imagesy($src);
+
+    $scale = min(1, 160 / $h, 480 / $w);
+    $tw = max(1, (int) round($w * $scale));
+    $th = max(1, (int) round($h * $scale));
+    $out = ($tw === $w && $th === $h) ? $src : cms_resize($src, $tw, $th);
+    if (!$out) {
+        imagedestroy($src);
+        throw new RuntimeException('Resizing failed: the server ran out of memory. Try a smaller logo.');
+    }
+    $data = '';
+    foreach ([88, 80, 70, 60] as $q) {
+        ob_start();
+        imagewebp($out, null, $q);
+        $data = (string) ob_get_clean();
+        if (strlen($data) <= 30_000) {
+            break;
+        }
+    }
+    if ($out !== $src) {
+        imagedestroy($out);
+    }
+    imagedestroy($src);
+
+    $dir = OLIVE_ROOT . '/uploads';
+    if (!is_dir($dir) && !@mkdir($dir, 0755, true)) {
+        throw new RuntimeException('The uploads folder is missing and could not be created.');
+    }
+    $base = slugify($name . ' logo', 45) . '-' . bin2hex(random_bytes(2));
+    if ($data === '' || file_put_contents($dir . '/' . $base . '.webp', $data, LOCK_EX) === false) {
+        throw new RuntimeException('Could not save the logo. Check that the uploads folder is writable.');
+    }
+    return ['src' => '/uploads/' . $base . '.webp', 'w' => $tw, 'h' => $th];
+}
+
 /** Thumbnail URL for the admin list (the 480 copy when there is one). */
 function thumb(array $img): string
 {
