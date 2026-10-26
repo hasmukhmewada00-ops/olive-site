@@ -29,6 +29,16 @@ $name = (string) ($b['name'] ?? 'Olive Catering Company');
 <meta name="description" content="<?= e($name) ?>: Pure Veg &amp; Jain catering for weddings, corporate events and celebrations in Gandhidham, Kutch and across Gujarat. New website coming soon.">
 <link rel="canonical" href="<?= e(canonical_url('/')) ?>">
 <meta name="theme-color" content="#3A4733">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="<?= e($name) ?>">
+<meta property="og:title" content="<?= e($name) ?> | Pure Veg &amp; Jain Caterers in Gandhidham, Kutch">
+<meta property="og:description" content="Pure Veg &amp; Jain catering for weddings, corporate events and celebrations in Gandhidham, Kutch and across Gujarat.">
+<meta property="og:url" content="<?= e(canonical_url('/')) ?>">
+<meta property="og:image" content="<?= e(canonical_url('/assets/img/olive-share.jpg')) ?>">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="en_IN">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">

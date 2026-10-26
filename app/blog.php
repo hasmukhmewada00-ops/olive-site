@@ -305,7 +305,7 @@ function blog_schema(array $post): string
         '@id' => canonical_url('/#business'),
         'name' => (string) content('business.name', 'Olive Catering Company'),
         'url' => canonical_url('/'),
-        'logo' => ['@type' => 'ImageObject', 'url' => canonical_url('/assets/img/og-image.jpg')],
+        'logo' => ['@type' => 'ImageObject', 'url' => canonical_url('/assets/img/olive-share.jpg')],
     ];
     $tags = array_values(blog_post_tags($post));
     $article = [

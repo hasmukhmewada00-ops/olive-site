@@ -115,7 +115,7 @@ function schema_json(): string
         'slogan' => 'Pure Veg & Jain Catering in Gandhidham, Kutch and across Gujarat',
         'url' => canonical_url('/'),
         'image' => array_values(array_filter([
-            canonical_url('/assets/img/og-image.jpg'),
+            canonical_url('/assets/img/olive-share.jpg'),
             !empty(content('hero.image.src')) ? canonical_url((string) content('hero.image.src')) : null,
         ])),
         'logo' => canonical_url('/assets/img/logo/olive-logo.svg'),

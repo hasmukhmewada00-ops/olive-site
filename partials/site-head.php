@@ -2,7 +2,7 @@
 /**
  * Shared <head>. Expects $meta = [title, desc, canonical, og_image, og_type, schema(json string), robots?]
  */
-$meta += ['og_type' => 'website', 'og_image' => canonical_url('/assets/img/og-image.jpg'), 'robots' => '', 'schema' => ''];
+$meta += ['og_type' => 'website', 'og_image' => canonical_url('/assets/img/olive-share.jpg'), 'robots' => '', 'schema' => ''];
 $siteName = (string) content('business.name', 'Olive Catering Company');
 ?><!doctype html>
 <html lang="en-IN">
