@@ -312,7 +312,7 @@ button { font: inherit; }
 
 /* ---------- footer ---------- */
 .foot { background: var(--olive-deep); color: rgba(248, 245, 240, .82); padding: 64px 0 28px; }
-.foot__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 40px; }
+.foot__grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.1fr; gap: 40px; }
 .foot__text { margin-top: 16px; max-width: 38ch; font-size: 15px; }
 .foot nav { display: grid; gap: 8px; align-content: start; }
 .foot a { color: var(--cream); text-decoration: none; }

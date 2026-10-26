@@ -43,6 +43,11 @@ ServerSignature Off
   RewriteRule ^blog/([a-z0-9-]+)$ /blog/$1/ [R=301,L]
   RewriteRule ^blog/([a-z0-9-]+)/$ post.php?slug=$1 [L,QSA]
 
+  # Service and area pages: /services/{slug}/
+  RewriteRule ^services$ /#services [R=301,NE,L]
+  RewriteRule ^services/([a-z0-9-]+)$ /services/$1/ [R=301,L]
+  RewriteRule ^services/([a-z0-9-]+)/$ service.php?slug=$1 [L,QSA]
+
   # Block private folders and files from the web
   RewriteRule ^(app|data|docs|partials|blog-content)(/|$) - [F,L]
   RewriteRule (^|/)\. - [F,L]

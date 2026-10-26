@@ -8,6 +8,7 @@ define('OLIVE_SKIP_GATE', true);
 require __DIR__ . '/app/bootstrap.php';
 require_once OLIVE_ROOT . '/app/render.php';
 require_once OLIVE_ROOT . '/app/blog.php';
+require_once OLIVE_ROOT . '/app/services.php';
 
 header('Content-Type: text/plain; charset=utf-8');
 header('X-Robots-Tag: noindex');
@@ -59,6 +60,9 @@ if ($faqs) {
 }
 $out[] = '## Pages';
 $out[] = '- [Home](' . canonical_url('/') . '): services, menus, hygiene, gallery, FAQ and enquiry form';
+foreach (service_pages() as $sslug => $sp) {
+    $out[] = '- [' . $sp['title'] . '](' . service_url($sslug, true) . '): ' . $sp['description'];
+}
 if ($live) {
     $out[] = '- [Blog](' . canonical_url('/blog/') . '): catering planning guides';
     foreach (blog_posts() as $p) {

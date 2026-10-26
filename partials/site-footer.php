@@ -11,6 +11,9 @@ $base = $base ?? '';
     <nav aria-label="Footer">
       <a href="<?= e($base) ?>#about">About</a><a href="<?= e($base) ?>#services">Services</a><a href="<?= e($base) ?>#menu">Menu</a><a href="<?= e($base) ?>#gallery">Gallery</a><a href="/blog/">Blog</a><a href="<?= e($base) ?>#contact">Contact</a>
     </nav>
+    <nav aria-label="Services">
+      <?php require_once OLIVE_ROOT . '/app/services.php'; foreach (service_pages() as $fs => $fp): ?><a href="<?= e(service_url($fs)) ?>"><?= e($fp['nav']) ?></a><?php endforeach; ?>
+    </nav>
     <div class="foot__meta" data-track-location="footer">
       <?php if (!empty($b['instagram'])): ?><a href="https://www.instagram.com/<?= e($b['instagram']) ?>/" target="_blank" rel="noopener">Instagram</a><?php endif; ?>
       <?php if (!empty($b['fssai'])): ?><p>FSSAI Lic. No. <?= e($b['fssai']) ?></p><?php endif; ?>

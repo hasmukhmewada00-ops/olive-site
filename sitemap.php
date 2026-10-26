@@ -4,6 +4,7 @@ declare(strict_types=1);
 define('OLIVE_SKIP_GATE', true);
 require __DIR__ . '/app/bootstrap.php';
 require_once OLIVE_ROOT . '/app/blog.php';
+require_once OLIVE_ROOT . '/app/services.php';
 
 header('Content-Type: application/xml; charset=utf-8');
 
@@ -14,6 +15,9 @@ $homeMod = date('Y-m-d', max(
 ));
 
 $urls = [['loc' => canonical_url('/'), 'lastmod' => $homeMod]];
+foreach (array_keys(service_pages()) as $svc) {
+    $urls[] = ['loc' => service_url($svc, true), 'lastmod' => date('Y-m-d', (int) filemtime(OLIVE_ROOT . '/app/services.php'))];
+}
 if (blog_enabled()) {
     $posts = blog_posts();
     $urls[] = ['loc' => canonical_url('/blog/'), 'lastmod' => $posts ? ($posts[0]['updated'] ?? $posts[0]['date']) : $homeMod];
