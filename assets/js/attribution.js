@@ -10,7 +10,8 @@
   'use strict';
 
   var DAYS = 90;
-  var PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'gclid', 'gbraid', 'wbraid', 'fbclid'];
+  var PARAMS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'ttclid'];
+  var AI_HOSTS = /(^|\.)(chatgpt\.com|chat\.openai\.com|openai\.com|perplexity\.ai|gemini\.google\.com|bard\.google\.com|copilot\.microsoft\.com|claude\.ai|you\.com|phind\.com|meta\.ai|grok\.com|deepseek\.com)$/;
   var dl = (window.dataLayer = window.dataLayer || []);
 
   // ---------- cookie helpers ----------
@@ -39,6 +40,11 @@
     if (v) { visit[p] = clean(v); hasCampaign = true; }
   });
 
+  // AI assistants (ChatGPT appends utm_source=chatgpt.com): label the medium
+  if (visit.utm_source && !visit.utm_medium && AI_HOSTS.test(String(visit.utm_source).toLowerCase())) {
+    visit.utm_medium = 'ai_assistant';
+  }
+
   // Derive a source when there are no UTMs
   if (!hasCampaign) {
     var ref = document.referrer;
@@ -51,6 +57,9 @@
     } else if (/(^|\.)google\./.test(refHost) || /(^|\.)bing\.com$/.test(refHost) || /duckduckgo\.com$/.test(refHost) || /search\.yahoo\.com$/.test(refHost)) {
       visit.utm_source = refHost.split('.')[0] === 'search' ? 'yahoo' : refHost.replace(/\..*$/, '');
       visit.utm_medium = 'organic';
+    } else if (AI_HOSTS.test(refHost)) {
+      visit.utm_source = refHost;
+      visit.utm_medium = 'ai_assistant';
     } else if (/(facebook|instagram|l\.facebook|lm\.facebook|l\.instagram)\./.test(refHost)) {
       visit.utm_source = /instagram/.test(refHost) ? 'instagram' : 'facebook';
       visit.utm_medium = 'social';
