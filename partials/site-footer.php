@@ -24,7 +24,7 @@ $base = $base ?? '';
   </div>
   <div class="wrap foot__base">
     <p>&copy; <?= date('Y') ?> <?= e($name) ?>. All rights reserved.</p>
-    <?php if (content('footer.credit') === true): ?><p>Website by One Man Marketing</p><?php endif; ?>
+    <p>Created and managed by <a href="https://onemanmarketing.in" target="_blank" rel="noopener">One Man Marketing</a></p>
   </div>
 </footer>
 
